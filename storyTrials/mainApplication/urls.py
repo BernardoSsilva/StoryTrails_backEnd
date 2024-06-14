@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('users/find/all', views.getAllUsers, name="findAllUsers")
+    path('users/find/all', views.getAllUsers, name="findAllUsers"),
+    path('users/find/<str:id>', views.getById, name="findUserById"),
 ]

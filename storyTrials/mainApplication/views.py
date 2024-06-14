@@ -16,7 +16,18 @@ def getAllUsers(request):
     
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(["GET"])
+@api_view(["GET"])
+def getById(request, id):
+     if request.method == "GET":
+         try:
+            user = User.objects.get(pk=id)
+         except: 
+             return Response(status=status.HTTP_404_NOT_FOUND)
+         serializer = UserSerializers(user)
+         
+         return Response(serializer.data)
+     
+     return Response(status=status.HTTP_400_BAD_REQUEST)
 # @api_view(["POST"])
 # @api_view(["PATCH"])
 # @api_view(["DELETE"])
