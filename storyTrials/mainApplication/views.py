@@ -40,5 +40,15 @@ def createUser(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
 
-# @api_view(["PATCH"])
+@api_view(["PATCH"])
+def updateUser(request, id):
+    try:
+        updatedUser = User.objects.get(pk=id)
+        serializer =  UserSerializers(updatedUser, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 # @api_view(["DELETE"])
