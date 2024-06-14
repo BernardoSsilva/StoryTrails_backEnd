@@ -28,6 +28,17 @@ def getById(request, id):
          return Response(serializer.data)
      
      return Response(status=status.HTTP_400_BAD_REQUEST)
-# @api_view(["POST"])
+@api_view(["POST"])
+def createUser(request):
+    try:
+        serializer = UserSerializers( data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST) 
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+
 # @api_view(["PATCH"])
 # @api_view(["DELETE"])
