@@ -1,33 +1,127 @@
-# Instalação
+# Instalação e Execução do Projeto
 
-Para ter o código disponível em sua maquina utilize o comando:
-`$ git clone https://github.com/BernardoSsilva/StoryTrails_backEnd.git`
+## Instalação
 
-Após isso crie um ambiente virtual python em dentro do projeto por meio do comando
+Para ter o código disponível em sua máquina, utilize o seguinte comando:
 
-Windows:
-`$ py -m venv venv`
+```bash
+$ git clone https://github.com/BernardoSsilva/StoryTrails_backEnd.git
+```
 
-Linux:
-`$python3 -m venv venv`
+### Criando um Ambiente Virtual
 
-apos isso realize a instalação das dependências por meio do comando
+Após clonar o repositório, crie um ambiente virtual Python dentro do projeto:
 
-`pip install -r requirements.txt`
+#### Windows
 
-# Execução do projeto
+```bash
+$ py -m venv venv
+```
 
-para realizar a compilação do projeto deve ser utilizado o comando
+#### Linux
 
-Window:
-`$ py manage.py runserver`
+```bash
+$ python3 -m venv venv
+```
 
-Linux:
-`$ python3 manage.py runserver`
-após isso a api estara em funcionamento na porta :8000
+### Ativando o Ambiente Virtual
 
-para ter acesso ao perfil de administrador utilize o comando
+#### Windows
 
-`$ py manage.py createsuperuser`
+```bash
+$ venv\Scripts ctivate
+```
 
-para criar sua conta e acesse o link `localhost:8000/admin`
+#### Linux
+
+```bash
+$ source venv/bin/activate
+```
+
+### Instalando Dependências
+
+Com o ambiente virtual ativado, instale as dependências do projeto:
+
+```bash
+(venv) $ pip install -r requirements.txt
+```
+
+## Execução do Projeto
+
+Para executar o projeto, utilize o comando adequado ao seu sistema operacional:
+
+### Windows
+
+```bash
+(venv) $ py manage.py runserver
+```
+
+### Linux
+
+```bash
+(venv) $ python3 manage.py runserver
+```
+
+Após isso, a API estará em funcionamento na porta `8000`. Você pode acessá-la no endereço `http://localhost:8000`.
+
+### Acesso ao Perfil de Administrador
+
+Para criar uma conta de superusuário e acessar o painel de administração, utilize o comando:
+
+```bash
+(venv) $ py manage.py createsuperuser
+```
+
+Depois de criar sua conta, acesse o painel de administração no link `http://localhost:8000/admin`.
+
+## Resumo de Comandos
+
+### Clonar o Repositório
+
+```bash
+$ git clone https://github.com/BernardoSsilva/StoryTrails_backEnd.git
+```
+
+### Criar e Ativar o Ambiente Virtual
+
+#### Windows
+
+```bash
+$ py -m venv venv
+$ venv\Scripts ctivate
+```
+
+#### Linux
+
+```bash
+$ python3 -m venv venv
+$ source venv/bin/activate
+```
+
+### Instalar Dependências
+
+```bash
+(venv) $ pip install -r requirements.txt
+```
+
+### Executar o Servidor
+
+#### Windows
+
+```bash
+(venv) $ py manage.py runserver
+```
+
+#### Linux
+
+```bash
+(venv) $ python3 manage.py runserver
+```
+
+### Criar Superusuário
+
+```bash
+(venv) $ py manage.py createsuperuser
+```
+
+Com esses passos, você estará pronto para desenvolver e testar o projeto StoryTrails BackEnd.

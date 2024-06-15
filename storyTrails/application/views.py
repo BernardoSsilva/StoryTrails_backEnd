@@ -51,4 +51,15 @@ def updateUser(request, id):
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
-# @api_view(["DELETE"])
+
+@api_view(["DELETE"])
+def deleteUser(request, id):
+    try:
+        deletedUser = User.objects.get(pk=id)
+        serializer = UserSerializers(deletedUser)
+        if serializer.is_valid():
+            serializer.delete()
+            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
