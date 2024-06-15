@@ -9,7 +9,15 @@ class User(models.Model):
     userPassword = models.CharField(max_length=255)
 
     def __str__(self):
-        return f'name: {self.userName}, id: {self.id}'
+        return f'userName: {self.userName}, id:{self.id}, password:{self.userPassword}'
+    
+    def to_dict(self):
+        return {
+            'id': str(self.id),
+            'userName': self.userName,
+            'userLogin': self.userLogin,
+            'userPassword': self.userPassword
+        }
 
 class Collection(models.Model):
     id=models.UUIDField( default = uuid.uuid4,  editable = False, db_index=True, primary_key=True, auto_created=True, )

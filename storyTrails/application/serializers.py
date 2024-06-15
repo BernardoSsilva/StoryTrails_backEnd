@@ -12,10 +12,17 @@ class BookSerializers( serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = "__all__"
+    def validate(self, attrs):
+       self._kwargs["partial"] = True
+       return super().validate(attrs)
+        
         
 
 class CollectionSerializers( serializers.ModelSerializer):
     class Meta:
         model = Collection
-        fields = "__all__"
-        
+        fields = "__all__"    
+    def validate(self, attrs):
+       self._kwargs["partial"] = True
+       return super().validate(attrs)
+            

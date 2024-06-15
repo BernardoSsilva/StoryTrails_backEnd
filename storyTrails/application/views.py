@@ -3,8 +3,14 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view 
 from rest_framework.response import Response
 from rest_framework import status
+import jwt
 from .models import User, Book, Collection
 from .serializers import BookSerializers, CollectionSerializers, UserSerializers
+import os
+
+
+
+# * user endPoints
 
 @api_view(["GET"])
 def getAllUsers(request):
@@ -66,18 +72,28 @@ def deleteUser(request, id):
 @api_view(["POST"])
 def authenticate(request):
     try:
-        allUsers = User.objects.all()
-        serializer = UserSerializers(allUsers, many=True)
-        authenticated = False
-        for user in serializer.data:
-            if((user["userLogin"] == request.data["userLogin"]) and(user["userPassword"] == request.data["userPassword"])):
-                authenticated = True
-                break
-                
-            
-        if(authenticated):
-            return Response(user, status=status.HTTP_200_OK)
+        user_login = request.data.get("userLogin")
+        password = request.data.get("userPassword")
+
+        if not user_login or not password:
+            return Response({"detail": "User login and password are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.get(userLogin=user_login)
+        userDict = user.to_dict()
+       
+        if(password == userDict["userPassword"]):
+            token = jwt.encode({"id": userDict["id"]},"'b3a60efa-6a44-4141-880b-97c26ffab9fe'",  algorithm="HS256")
+            return Response({"token": token}, status=status.HTTP_200_OK)
         
-        return Response(status=status.HTTP_401_UNAUTHORIZED)   
+        return Response({"detail": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)
+    
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    
+ 
+
+
+# * collections endPoints
+
+
+# * books endPoints
