@@ -82,7 +82,7 @@ def authenticate(request):
         userDict = user.to_dict()
        
         if(password == userDict["userPassword"]):
-            token = jwt.encode({"id": userDict["id"]},"'b3a60efa-6a44-4141-880b-97c26ffab9fe'",  algorithm="HS256")
+            token = jwt.encode({"id": userDict["id"]},'b3a60efa-6a44-4141-880b-97c26ffab9fe',  algorithm="HS256")
             return Response({"token": token}, status=status.HTTP_200_OK)
         
         return Response({"detail": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)
@@ -94,6 +94,27 @@ def authenticate(request):
 
 
 # * collections endPoints
+@api_view(["GET"])
+def findAllCollections(request):
+    try:
+        token = request.data.get("Authorization")
 
+        decodedToken = jwt.decode(token,'b3a60efa-6a44-4141-880b-97c26ffab9fe',  algorithms=["HS256"])
+        print(decodedToken["id"])
+        user = User.objects.get(pk=decodedToken["id"])
+        
+        allCollections = Collection.objects.all()
+        
+        print(allCollections)
+        collectionsSerializer = CollectionSerializers(allCollections, many=True)
+        print("collectionsSerializer", collectionsSerializer)
+        presenterBody = [collection for collection in collectionsSerializer.data if collection["user"] == str(user.id)]
+        
+        if presenterBody:
+            return Response(presenterBody, status=status.HTTP_200_OK)
+        return Response({"detail": "Empty content."}, status=status.HTTP_204_NO_CONTENT)
+    
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # * books endPoints
