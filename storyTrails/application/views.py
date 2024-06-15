@@ -56,10 +56,28 @@ def updateUser(request, id):
 def deleteUser(request, id):
     try:
         deletedUser = User.objects.get(pk=id)
-        serializer = UserSerializers(deletedUser)
-        if serializer.is_valid():
-            serializer.delete()
-            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+        
+        deletedUser.delete()
+        return Response( status=status.HTTP_202_ACCEPTED)
+        
+    except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+def authenticate(request):
+    try:
+        allUsers = User.objects.all()
+        serializer = UserSerializers(allUsers, many=True)
+        authenticated = False
+        for user in serializer.data:
+            if((user["userLogin"] == request.data["userLogin"]) and(user["userPassword"] == request.data["userPassword"])):
+                print(user)
+                authenticated = True
+                return Response(user, status=status.HTTP_200_OK)
+                break
+            
+        if(authenticated):
+            return Response(user, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)   
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
