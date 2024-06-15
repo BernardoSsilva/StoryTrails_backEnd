@@ -71,13 +71,13 @@ def authenticate(request):
         authenticated = False
         for user in serializer.data:
             if((user["userLogin"] == request.data["userLogin"]) and(user["userPassword"] == request.data["userPassword"])):
-                print(user)
                 authenticated = True
-                return Response(user, status=status.HTTP_200_OK)
                 break
+                
             
         if(authenticated):
             return Response(user, status=status.HTTP_200_OK)
+        
         return Response(status=status.HTTP_401_UNAUTHORIZED)   
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
