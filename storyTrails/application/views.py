@@ -134,7 +134,7 @@ def findAllCollections(request):
    
         presenterBody = []
         for collection in collectionsSerializer.data:
-            if collection["user"] == decodedToken["id"]:
+            if str(collection["user"]) == str(decodedToken["id"]):
                 presenterBody.append(collection)
         
         print(presenterBody)
@@ -219,7 +219,8 @@ def findAllBooks(request):
         booksByUser = []
         
         for book in booksSerializer.data:
-            if(str(book.user.id) == str(decodedToken["id"])):
+       
+            if(str(book["user"]) == str(decodedToken["id"])):
                 booksByUser.append(book)
         
         if(len(booksByUser) > 0):
@@ -245,7 +246,7 @@ def findAllBooksIntoCollection(request, id):
         booksByCollection = []
         
         for book in booksSerializer.data:
-            if(str(book.user.id) == str(decodedToken["id"])):
+            if(str(book["user"]) == str(decodedToken["id"])):
                 if(str(book.collection.id )== str(id)):
                     booksByCollection.append(book)
         
@@ -270,3 +271,25 @@ def findBookById(request, id):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(["POST"])
+def createNewBook(request):
+    try:
+        token = request.headers.get("token")
+        decodedToken = jwt.decode(token, tokenKey, algorithms = ["HS256"])        
+        if(decodedToken):
+            requestBody = {"collection":request.data.get("collection"),"bookName":request.data.get("bookName"),
+                           "pagesAmount":request.data.get("pagesAmount"),
+                           "concluded":request.data.get("concluded"),
+                           "user":decodedToken["id"]}
+           
+            serializer = BookSerializer(data=requestBody)
+            
+            if serializer.is_valid():
+                print("chegou aqui")
+                serializer.save()
+                return Response(serializer.data, status = status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)

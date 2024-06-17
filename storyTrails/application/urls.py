@@ -22,5 +22,6 @@ urlpatterns = [
     
     path("books/find/all", views.findAllBooks, name="findAllBooks"),
     path("books/find/collection/<str:id>", views.findAllBooksIntoCollection, name="findAllBooksIntoCollection"),
-    path("books/find/<str:id>", views.findBookById, name="findBookBydId")
+    path("books/find/<str:id>", views.findBookById, name="findBookBydId"),
+    path("books/create", views.createNewBook, name="createNewBook")
 ]
