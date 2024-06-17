@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import User, Book, Collection
-class UserSerializers( serializers.ModelSerializer):
+class UserSerializer( serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
@@ -8,7 +8,7 @@ class UserSerializers( serializers.ModelSerializer):
        self._kwargs["partial"] = True
        return super().validate(attrs)
         
-class BookSerializers( serializers.ModelSerializer):
+class BookSerializer( serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = "__all__"
@@ -18,7 +18,8 @@ class BookSerializers( serializers.ModelSerializer):
         
         
 
-class CollectionSerializers( serializers.ModelSerializer):
+class CollectionSerializer( serializers.ModelSerializer):
+    # user = UserSerializer()
     class Meta:
         model = Collection
         fields = "__all__"    

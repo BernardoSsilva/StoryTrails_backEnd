@@ -5,18 +5,18 @@ from rest_framework.response import Response
 from rest_framework import status
 import jwt
 from .models import User, Book, Collection
-from .serializers import BookSerializers, CollectionSerializers, UserSerializers
+from .serializers import BookSerializer, CollectionSerializer, UserSerializer
 import os
 
 
-
+tokenKey = 'b3a60efa-6a44-4141-880b-97c26ffab9fe'
 # * user endPoints
 
 @api_view(["GET"])
 def getAllUsers(request):
     if request.method == "GET":
         users = User.objects.all()
-        serializer = UserSerializers(users, many=True)
+        serializer = UserSerializer(users, many=True)
         
         return Response(serializer.data)
     
@@ -29,7 +29,7 @@ def getById(request, id):
             user = User.objects.get(pk=id)
          except: 
              return Response(status=status.HTTP_404_NOT_FOUND)
-         serializer = UserSerializers(user)
+         serializer = UserSerializer(user)
          
          return Response(serializer.data)
      
@@ -37,7 +37,7 @@ def getById(request, id):
 @api_view(["POST"])
 def createUser(request):
     try:
-        serializer = UserSerializers( data=request.data)
+        serializer = UserSerializer( data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -50,7 +50,7 @@ def createUser(request):
 def updateUser(request, id):
     try:
         updatedUser = User.objects.get(pk=id)
-        serializer =  UserSerializers(updatedUser, data=request.data, partial=True)
+        serializer =  UserSerializer(updatedUser, data=request.data, partial=True)
         
         if serializer.is_valid():
             serializer.save()
@@ -82,7 +82,7 @@ def authenticate(request):
         userDict = user.to_dict()
        
         if(password == userDict["userPassword"]):
-            token = jwt.encode({"id": userDict["id"]},'b3a60efa-6a44-4141-880b-97c26ffab9fe',  algorithm="HS256")
+            token = jwt.encode({"id": userDict["id"]},tokenKey,  algorithm="HS256")
             return Response({"token": token}, status=status.HTTP_200_OK)
         
         return Response({"detail": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)
@@ -94,21 +94,51 @@ def authenticate(request):
 
 
 # * collections endPoints
+
+
+@api_view(["POST"])
+def createNewCollection(request):
+    try:
+        token = request.data.get("Authorization")
+        decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
+        
+        user = User.objects.get(pk=decodedToken["id"])     
+
+     
+        collectionName = request.data.get("collectionName")
+        collectionObjective = request.data.get("collectionObjective")
+        
+    
+        
+        collectionBody = {"user":user.id, "collectionName":collectionName, "collectionObjective":collectionObjective,}
+        
+        serializer = CollectionSerializer(data=collectionBody)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(["GET"])
 def findAllCollections(request):
     try:
         token = request.data.get("Authorization")
 
-        decodedToken = jwt.decode(token,'b3a60efa-6a44-4141-880b-97c26ffab9fe',  algorithms=["HS256"])
-        print(decodedToken["id"])
+
+        decodedToken = jwt.decode(token, tokenKey,  algorithms=["HS256"])
         user = User.objects.get(pk=decodedToken["id"])
         
         allCollections = Collection.objects.all()
         
-        print(allCollections)
-        collectionsSerializer = CollectionSerializers(allCollections, many=True)
-        print("collectionsSerializer", collectionsSerializer)
-        presenterBody = [collection for collection in collectionsSerializer.data if collection["user"] == str(user.id)]
+        collectionsSerializer = CollectionSerializer(allCollections, many=True)
+        print(user.id)
+        print(collectionsSerializer.data)
+        presenterBody = []
+        for collection in collectionsSerializer.data:
+            if collection["user"] == user.id:
+                presenterBody.append(collection)
+        
+        print(presenterBody)
         
         if presenterBody:
             return Response(presenterBody, status=status.HTTP_200_OK)

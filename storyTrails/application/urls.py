@@ -12,5 +12,6 @@ urlpatterns = [
     path("users/login", views.authenticate, name="loginUser"),
     
     # * Collections endpoints
-    path("collections/find/all", views.findAllCollections, name="findAllCollections")
+    path("collections/find/all", views.findAllCollections, name="findAllCollections"),
+    path("collections/create", views.createNewCollection, name="createNewCollection")
 ]
