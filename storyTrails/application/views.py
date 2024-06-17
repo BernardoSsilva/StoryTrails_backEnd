@@ -255,3 +255,18 @@ def findAllBooksIntoCollection(request, id):
             return Response({"details": "empty content"},status = status.HTTP_204_NO_CONTENT)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(["GET"])
+def findBookById(request, id):
+    try:
+        token = request.headers.get("token")
+        decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
+        
+        book = Book.objects.get(pk=id)
+        
+        if(str(book.user.id) == str(decodedToken["id"])):
+            return Response(book, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
