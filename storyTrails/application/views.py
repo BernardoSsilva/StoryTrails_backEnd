@@ -215,7 +215,6 @@ def findAllBooks(request):
         decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
         allBooks = Book.objects.all()
         
-        print(allBooks)
         booksSerializer = BookSerializer(allBooks, many=True)
         booksByUser = []
         
@@ -225,6 +224,33 @@ def findAllBooks(request):
         
         if(len(booksByUser) > 0):
             return Response(booksByUser, status= status.HTTP_200_OK)
+        else:
+            return Response({"details": "empty content"},status = status.HTTP_204_NO_CONTENT)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(["GET"])
+def findAllBooksIntoCollection(request, id):
+    try:
+        token = request.headers.get("token")
+  
+        if(not token):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
+        decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
+        allBooks = Book.objects.all()
+        
+        
+        booksSerializer = BookSerializer(allBooks, many=True)
+        booksByCollection = []
+        
+        for book in booksSerializer.data:
+            if(str(book.user.id) == str(decodedToken["id"])):
+                if(str(book.collection.id )== str(id)):
+                    booksByCollection.append(book)
+        
+        if(len(booksByCollection) > 0):
+            return Response(booksByCollection, status= status.HTTP_200_OK)
         else:
             return Response({"details": "empty content"},status = status.HTTP_204_NO_CONTENT)
     except:

@@ -20,5 +20,6 @@ urlpatterns = [
 
     # * Books endpoints
     
-    path("books/find/all", views.findAllBooks, name="findAllBooks")
+    path("books/find/all", views.findAllBooks, name="findAllBooks"),
+    path("books/find/collection/<str:id>", views.findAllBooksIntoCollection, name="findAllBooksIntoCollection")
 ]
