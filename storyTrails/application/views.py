@@ -103,7 +103,7 @@ def authenticate(request):
 @api_view(["POST"])
 def createNewCollection(request):
     try:
-        token = request.data.get("Authorization")
+        token =  request.headers.get("token")
         decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
         
         user = User.objects.get(pk=decodedToken["id"])     
@@ -126,9 +126,7 @@ def createNewCollection(request):
 @api_view(["GET"])
 def findAllCollections(request):
     try:
-        token = request.data.get("Authorization")
-
-
+        token =  request.headers.get("token")
         decodedToken = jwt.decode(token, tokenKey,  algorithms=["HS256"])
         user = User.objects.get(pk=decodedToken["id"])
         
@@ -153,7 +151,7 @@ def findAllCollections(request):
 @api_view(["GET"])
 def findCollectionById(request, id):
     try:
-        token =  request.data.get("Authorization")
+        token =  request.headers.get("token")
         decoded_token =  jwt.decode(token, tokenKey,  algorithms=["HS256"])
         
         
@@ -169,6 +167,42 @@ def findCollectionById(request, id):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
+@api_view(["PATCH"])
+def editCollection(request, id):
+    try:
+        token = request.headers.get("token")
+        decoded_token =  jwt.decode(token, tokenKey,  algorithms=["HS256"])
+        collectionToAlter = Collection.objects.get(pk=id)
+        print(decoded_token, collectionToAlter)
+        if((str(decoded_token["id"]) == str(collectionToAlter.user.id))):
+            print(request.data)
+            serializer = CollectionSerializer(collectionToAlter, data=request.data, partial=True)
+            if(serializer.is_valid()):
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     
+    
+@api_view(["DELETE"])
+def deleteCollection(request, id):
+    try:
+        token = request.headers.get("token")
+        decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
+        collectionToExclude = Collection.objects.get(pk=id)
+        
+        if(str(decodedToken["id"]) == str(collectionToExclude.user.id)):
+            collectionToExclude.delete()
+            return Response( status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 # * books endPoints
