@@ -9,8 +9,12 @@ from .serializers import BookSerializer, CollectionSerializer, UserSerializer
 import os
 
 
+
+
 tokenKey = 'b3a60efa-6a44-4141-880b-97c26ffab9fe'
 # * user endPoints
+
+
 
 @api_view(["GET"])
 def getAllUsers(request):
@@ -131,8 +135,7 @@ def findAllCollections(request):
         allCollections = Collection.objects.all()
         
         collectionsSerializer = CollectionSerializer(allCollections, many=True)
-        print(user.id)
-        print(collectionsSerializer.data)
+   
         presenterBody = []
         for collection in collectionsSerializer.data:
             if collection["user"] == user.id:
@@ -146,5 +149,26 @@ def findAllCollections(request):
     
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(["GET"])
+def findCollectionById(request, id):
+    try:
+        token =  request.data.get("Authorization")
+        decoded_token =  jwt.decode(token, tokenKey,  algorithms=["HS256"])
+        
+        
+        collection = Collection.objects.get(pk=id)
+        
+        if(str(collection.user.id) == str(decoded_token["id"])):
+            if(collection):
+                serializer = CollectionSerializer(collection)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_204_EMPTY)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    
 
 # * books endPoints

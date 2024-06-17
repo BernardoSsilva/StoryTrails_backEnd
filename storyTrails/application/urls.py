@@ -13,5 +13,6 @@ urlpatterns = [
     
     # * Collections endpoints
     path("collections/find/all", views.findAllCollections, name="findAllCollections"),
-    path("collections/create", views.createNewCollection, name="createNewCollection")
+    path("collections/create", views.createNewCollection, name="createNewCollection"),
+    path("collections/find/<str:id>", views.findCollectionById, name="createNewCollection")
 ]
