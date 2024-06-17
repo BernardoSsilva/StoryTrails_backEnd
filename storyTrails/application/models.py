@@ -33,6 +33,7 @@ class Book(models.Model):
     bookName = models.CharField(max_length=255)
     pagesAmount = models.IntegerField()
     concluded = models.BooleanField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.bookName
     

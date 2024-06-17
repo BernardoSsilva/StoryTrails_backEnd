@@ -128,15 +128,13 @@ def findAllCollections(request):
     try:
         token =  request.headers.get("token")
         decodedToken = jwt.decode(token, tokenKey,  algorithms=["HS256"])
-        user = User.objects.get(pk=decodedToken["id"])
-        
         allCollections = Collection.objects.all()
         
         collectionsSerializer = CollectionSerializer(allCollections, many=True)
    
         presenterBody = []
         for collection in collectionsSerializer.data:
-            if collection["user"] == user.id:
+            if collection["user"] == decodedToken["id"]:
                 presenterBody.append(collection)
         
         print(presenterBody)
@@ -206,3 +204,28 @@ def deleteCollection(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 # * books endPoints
+@api_view(["GET"])
+def findAllBooks(request):
+    try:
+        token = request.headers.get("token")
+  
+        if(not token):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        
+        decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
+        allBooks = Book.objects.all()
+        
+        print(allBooks)
+        booksSerializer = BookSerializer(allBooks, many=True)
+        booksByUser = []
+        
+        for book in booksSerializer.data:
+            if(str(book.user.id) == str(decodedToken["id"])):
+                booksByUser.append(book)
+        
+        if(len(booksByUser) > 0):
+            return Response(booksByUser, status= status.HTTP_200_OK)
+        else:
+            return Response({"details": "empty content"},status = status.HTTP_204_NO_CONTENT)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
