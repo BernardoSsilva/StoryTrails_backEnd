@@ -7,37 +7,48 @@ import jwt
 from .models import User, Book, Collection
 from .serializers import BookSerializer, CollectionSerializer, UserSerializer
 import os
-
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 
 tokenKey = 'b3a60efa-6a44-4141-880b-97c26ffab9fe'
 # * user endPoints
-
-
-
+@swagger_auto_schema(
+    method='get',
+    responses={200: UserSerializer(many=True), 400:"Bad request", 204:"no content"}
+)
 @api_view(["GET"])
 def getAllUsers(request):
-    if request.method == "GET":
+    try:
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
-        
-        return Response(serializer.data)
-    
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+        if(len(serializer.data) > 0):
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"details":"no content"},status=status.HTTP_204_NO_CONTENT)
+    except:    
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
+@swagger_auto_schema(
+    method='get',
+    responses={200: UserSerializer(), 404:"not found"}
+)
 @api_view(["GET"])
 def getById(request, id):
-     if request.method == "GET":
-         try:
-            user = User.objects.get(pk=id)
-         except: 
-             return Response(status=status.HTTP_404_NOT_FOUND)
-         serializer = UserSerializer(user)
+    try:
+        user = User.objects.get(pk=id)
+        serializer = UserSerializer(user)
          
-         return Response(serializer.data)
-     
-     return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except: 
+        return Response({"details":"user not found"},status=status.HTTP_404_NOT_FOUND)
+         
+
+@swagger_auto_schema(
+    method='post',
+    request_body=UserSerializer,
+    responses={201: UserSerializer(), 400: 'Bad Request'}
+)
 @api_view(["POST"])
 def createUser(request):
     try:
@@ -50,6 +61,11 @@ def createUser(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     
 
+@swagger_auto_schema(
+    method='patch',
+    request_body=UserSerializer(partial=True),
+    responses={202: UserSerializer(), 401: 'Unauthorized',404:"not found"}
+)
 @api_view(["PATCH"])
 def updateUser(request, id):
     try:
@@ -67,6 +83,10 @@ def updateUser(request, id):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+@swagger_auto_schema(
+    method='delete',
+    responses={202: "user deleted", 401: 'Unauthorized',404:"not found"}
+)
 @api_view(["DELETE"])
 def deleteUser(request, id):
     try:
@@ -75,12 +95,17 @@ def deleteUser(request, id):
         deletedUser = User.objects.get(pk=id)
         if(str(decodedToken["id"]) == str(deletedUser.id)):
             deletedUser.delete()
-            return Response( status=status.HTTP_202_ACCEPTED)
+            return Response({"details": "user deleted"}, status=status.HTTP_202_ACCEPTED)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)       
+            return Response({"details": "Unauthorized"},status=status.HTTP_401_UNAUTHORIZED)       
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response({"details": "not found"},status=status.HTTP_400_BAD_REQUEST)
 
+@swagger_auto_schema(
+    method='post',
+    request_body=UserSerializer(partial=True),
+    responses={200: UserSerializer(), 401: "Invalid credentials.",404:"not found",400:"User login and password are required."}
+)
 @api_view(["POST"])
 def authenticate(request):
     try:
@@ -108,7 +133,10 @@ def authenticate(request):
 
 # * collections endPoints
 
-
+@swagger_auto_schema(
+    method='post',
+    request_body=CollectionSerializer(),
+    responses={200: CollectionSerializer(),400:"bad request"})
 @api_view(["POST"])
 def createNewCollection(request):
     try:
@@ -130,8 +158,13 @@ def createNewCollection(request):
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response({"details":"bad request"},status=status.HTTP_400_BAD_REQUEST)
 
+
+@swagger_auto_schema(
+    method='get',
+    responses={200: CollectionSerializer(many=True), 204: "empty content",400:"bad request"}
+)
 @api_view(["GET"])
 def findAllCollections(request):
     try:
@@ -150,11 +183,15 @@ def findAllCollections(request):
         
         if presenterBody:
             return Response(presenterBody, status=status.HTTP_200_OK)
-        return Response({"detail": "Empty content."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"details": "Empty content."}, status=status.HTTP_204_NO_CONTENT)
     
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-    
+        return Response({"details": "bad request"},status=status.HTTP_400_BAD_REQUEST)
+
+@swagger_auto_schema(
+    method='get',
+    responses={200: CollectionSerializer(), 204: "empty content",404:"not found", 401:"unauthorized"}
+) 
 @api_view(["GET"])
 def findCollectionById(request, id):
     try:
@@ -168,12 +205,17 @@ def findCollectionById(request, id):
             if(collection):
                 serializer = CollectionSerializer(collection)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(status=status.HTTP_204_EMPTY)
+            return Response({"details":"empty content"},status=status.HTTP_204_EMPTY)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details":"unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
+        return Response({"details":"not found"}, status=status.HTTP_404_NOT_FOUND)
+ 
+@swagger_auto_schema(
+    method='patch',
+    request_body=CollectionSerializer(partial=True),
+    responses={200: CollectionSerializer(), 400: "bad request", 401:"unauthorized"}
+)    
 @api_view(["PATCH"])
 def updateCollection(request, id):
     try:
@@ -188,14 +230,18 @@ def updateCollection(request, id):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response({"details":"bad request"},status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details":"unauthorized"},status=status.HTTP_401_UNAUTHORIZED)
         
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-    
-    
+        return Response({"details":"bad request"},status=status.HTTP_400_BAD_REQUEST)
+   
+
+@swagger_auto_schema(
+    method='delete',
+    responses={202: "collection deleted", 400: "bad request", 401:"unauthorized"}
+)      
 @api_view(["DELETE"])
 def deleteCollection(request, id):
     try:
@@ -205,14 +251,20 @@ def deleteCollection(request, id):
         
         if(str(decodedToken["id"]) == str(collectionToDelete.user.id)):
             collectionToDelete.delete()
-            return Response( status=status.HTTP_202_ACCEPTED)
+            return Response({"details":"collection deleted"},status=status.HTTP_202_ACCEPTED)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details":"unauthorized"},status=status.HTTP_401_UNAUTHORIZED)
 
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({"details":"bad request"},status=status.HTTP_404_NOT_FOUND)
 
 # * books endPoints
+
+@swagger_auto_schema(
+    method='post',
+    request_body=BookSerializer(),
+    responses={201: BookSerializer(), 400: "bad request", 401:"unauthorized"}
+)  
 @api_view(["POST"])
 def createNewBook(request):
     try:
@@ -227,22 +279,25 @@ def createNewBook(request):
             serializer = BookSerializer(data=requestBody)
             
             if serializer.is_valid():
-                print("chegou aqui")
                 serializer.save()
                 return Response(serializer.data, status = status.HTTP_201_CREATED)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details": "unauthorized"},status=status.HTTP_401_UNAUTHORIZED)
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response({"details": "bad request"},status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(
+    method='get',
+    responses={200: BookSerializer(many=True), 400: "bad request", 401:"unauthorized", 204: "empty content"}
+)  
 @api_view(["GET"])
 def findAllBooks(request):
     try:
         token = request.headers.get("token")
   
         if(not token):
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details": "unauthorized"},status=status.HTTP_401_UNAUTHORIZED)
         
         decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
         allBooks = Book.objects.all()
@@ -260,15 +315,19 @@ def findAllBooks(request):
         else:
             return Response({"details": "empty content"},status = status.HTTP_204_NO_CONTENT)
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
+        return Response({"details": "bad request"},status=status.HTTP_400_BAD_REQUEST)
+
+@swagger_auto_schema(
+    method='get',
+    responses={200: BookSerializer(many=True), 404: "not found", 401:"unauthorized", 204: "empty content"}
+)     
 @api_view(["GET"])
 def findAllBooksIntoCollection(request, id):
     try:
         token = request.headers.get("token")
   
         if(not token):
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
         
         decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
         allBooks = Book.objects.all()
@@ -288,8 +347,13 @@ def findAllBooksIntoCollection(request, id):
         else:
             return Response({"details": "empty content"},status = status.HTTP_204_NO_CONTENT)
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({"details": "not found"},status=status.HTTP_404_NOT_FOUND)
     
+    
+@swagger_auto_schema(
+    method='get',
+    responses={200: BookSerializer(many=True), 404: "not found", 401:"unauthorized"}
+)     
 @api_view(["GET"])
 def findBookById(request, id):
     try:
@@ -301,11 +365,16 @@ def findBookById(request, id):
         if(str(book.user.id) == str(decodedToken["id"])):
             return Response(book, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details": "unauthorized"},status=status.HTTP_401_UNAUTHORIZED)
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({"details": "not found"},status=status.HTTP_404_NOT_FOUND)
 
 
+@swagger_auto_schema(
+    method='patch',
+    request_body=BookSerializer(partial=True),
+    responses={200: BookSerializer(), 404: "not found", 401:"unauthorized"}
+)  
 @api_view(["PATCH"])
 def updateBook(request, id):
     try:
@@ -319,13 +388,18 @@ def updateBook(request, id):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                 return Response(status=status.HTTP_404_NOT_FOUND)
+                 return Response({"details": "not found"},status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
                
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
+        return Response({"details": "not found"},status=status.HTTP_404_NOT_FOUND)
+
+
+@swagger_auto_schema(
+    method='delete',
+    responses={204: "empty content", 404: "not found", 401:"unauthorized"}
+)  
 @api_view(["DELETE"])
 def deleteBook(request, id):
     try:
@@ -335,10 +409,10 @@ def deleteBook(request, id):
         
         if(str(decodedToken["id"]) == str(bookToDelete.user.id)):
             bookToDelete.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response({"details": "empty content"},status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"details": "unauthorized"},status=status.HTTP_401_UNAUTHORIZED)
 
     except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({"details": "not found"},status=status.HTTP_404_NOT_FOUND)
         
