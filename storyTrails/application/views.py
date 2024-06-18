@@ -204,6 +204,29 @@ def deleteCollection(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 # * books endPoints
+@api_view(["POST"])
+def createNewBook(request):
+    try:
+        token = request.headers.get("token")
+        decodedToken = jwt.decode(token, tokenKey, algorithms = ["HS256"])        
+        if(decodedToken):
+            requestBody = {"collection":request.data.get("collection"),"bookName":request.data.get("bookName"),
+                           "pagesAmount":request.data.get("pagesAmount"),
+                           "concluded":request.data.get("concluded"),
+                           "user":decodedToken["id"]}
+           
+            serializer = BookSerializer(data=requestBody)
+            
+            if serializer.is_valid():
+                print("chegou aqui")
+                serializer.save()
+                return Response(serializer.data, status = status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(["GET"])
 def findAllBooks(request):
     try:
@@ -245,9 +268,10 @@ def findAllBooksIntoCollection(request, id):
         booksSerializer = BookSerializer(allBooks, many=True)
         booksByCollection = []
         
+        
         for book in booksSerializer.data:
             if(str(book["user"]) == str(decodedToken["id"])):
-                if(str(book.collection.id )== str(id)):
+                if(str(book["collection"] )== str(id)):
                     booksByCollection.append(book)
         
         if(len(booksByCollection) > 0):
@@ -272,24 +296,23 @@ def findBookById(request, id):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(["POST"])
-def createNewBook(request):
+
+@api_view(["PATCH"])
+def updateBook(request, id):
     try:
         token = request.headers.get("token")
-        decodedToken = jwt.decode(token, tokenKey, algorithms = ["HS256"])        
-        if(decodedToken):
-            requestBody = {"collection":request.data.get("collection"),"bookName":request.data.get("bookName"),
-                           "pagesAmount":request.data.get("pagesAmount"),
-                           "concluded":request.data.get("concluded"),
-                           "user":decodedToken["id"]}
-           
-            serializer = BookSerializer(data=requestBody)
-            
-            if serializer.is_valid():
-                print("chegou aqui")
+        decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
+        bookToEdit = Book.objects.get(pk=id)
+        if(str(decodedToken["id"]) == str(bookToEdit.user.id)):
+            serializer = BookSerializer(bookToEdit,data=request.data ,partial=True)
+            print(serializer)
+            if(serializer.is_valid()):
                 serializer.save()
-                return Response(serializer.data, status = status.HTTP_201_CREATED)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                 return Response(status=status.HTTP_404_NOT_FOUND)
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
+               
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_404_NOT_FOUND)
