@@ -316,3 +316,20 @@ def updateBook(request, id):
                
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(["DELETE"])
+def deleteBook(request, id):
+    try:
+        token = request.headers.get("token")
+        decodedToken = jwt.decode(token, tokenKey, algorithms=["HS256"])
+        bookToDelete = Book.objects.get(pk=id)
+        
+        if(str(decodedToken["id"]) == str(bookToDelete.user.id)):
+            bookToDelete.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+        
