@@ -15,7 +15,7 @@ urlpatterns = [
     path("collections/find/all", views.findAllCollections, name="findAllCollections"),
     path("collections/create", views.createNewCollection, name="createNewCollection"),
     path("collections/find/<str:id>", views.findCollectionById, name="findOneCollection"),
-    path("collections/edit/<str:id>", views.editCollection, name="editCollection"),
+    path("collections/edit/<str:id>", views.updateCollection, name="editCollection"),
     path("collections/delete/<str:id>", views.deleteCollection, name="deleteCollection"),
 
     # * Books endpoints
