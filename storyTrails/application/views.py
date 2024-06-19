@@ -12,7 +12,7 @@ from drf_yasg import openapi
 
 
 
-tokenKey = 'b3a60efa-6a44-4141-880b-97c26ffab9fe'
+tokenKey = os.environ.get("TOKEN_KEY")
 # * user endPoints
 @swagger_auto_schema(
     method='get',
