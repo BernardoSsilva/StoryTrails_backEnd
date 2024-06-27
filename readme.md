@@ -29,7 +29,7 @@ $ python3 -m venv venv
 #### Windows
 
 ```bash
-$ venv\Scripts ctivate
+$ venv\Scripts\activate.bat
 ```
 
 #### Linux
@@ -88,7 +88,7 @@ $ git clone https://github.com/BernardoSsilva/StoryTrails_backEnd.git
 
 ```bash
 $ py -m venv venv
-$ venv\Scripts ctivate
+$ venv\Scripts\activate.bat
 ```
 
 #### Linux
