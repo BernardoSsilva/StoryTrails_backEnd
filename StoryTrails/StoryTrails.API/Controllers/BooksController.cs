@@ -60,13 +60,13 @@ namespace StoryTrails.API.Controllers
         [HttpGet]
         [Route("collection/{id}")]
         [ProducesResponseType(typeof(BookDetailedResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListBooksIntoCollection(string id, [FromServices] IFindBooksByCollectionUseCase useCase)
         {
             var response = await useCase.Execute(id);
             if (response.books.Count<1 )
             {
-                return NoContent();
+                return NotFound("No books found on collection");
             }
            
             return Ok(response);

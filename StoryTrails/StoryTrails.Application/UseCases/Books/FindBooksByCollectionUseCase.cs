@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Books.interfaces;
 using StoryTrails.Comunication.Responses.Books;
 using StoryTrails.Domain.Infra;
@@ -16,9 +17,12 @@ namespace StoryTrails.Application.UseCases.Books
         }
         public async Task<MultipleBooksResponse> Execute(string collectionId)
         {
-            var booksList = _repository.Books.ToList();
-            var result = booksList.FindAll(book => book.Collection == collectionId);
-            return _mapper.Map<MultipleBooksResponse>(result);
+            var booksList = await _repository.Books.ToListAsync();
+            var result = booksList.Where(book => book.Collection.ToString() == collectionId.ToString());
+            return new MultipleBooksResponse
+            {
+                books = _mapper.Map<List<BookShortResponse>>(result)
+            };
         }
     }
 }
