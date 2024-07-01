@@ -52,8 +52,23 @@ namespace StoryTrails.API.Controllers
 
             if(response is null)
             {
-                return NotFound();
+                return NotFound("not found");
             }
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("collection/{id}")]
+        [ProducesResponseType(typeof(BookDetailedResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> ListBooksIntoCollection(string id, [FromServices] IFindBooksByCollectionUseCase useCase)
+        {
+            var response = await useCase.Execute(id);
+            if (response.books.Count<1 )
+            {
+                return NoContent();
+            }
+           
             return Ok(response);
         }
     }
