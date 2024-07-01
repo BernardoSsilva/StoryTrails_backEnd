@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using StoryTrails.API.Infra;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddEntityFrameworkNpgsql()
+    .AddDbContext<DatabaseSettings>(options => options.UseNpgsql("Host=localhost;Port=5432;Pooling=true;Database=StoryTrails; User Id=postgres;Password=postgres"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,6 +21,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 
