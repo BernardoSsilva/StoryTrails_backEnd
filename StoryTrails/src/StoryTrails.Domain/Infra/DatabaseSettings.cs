@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoryTrails.API.Entities;
+using StoryTrails.Domain.Entities;
 
-namespace StoryTrails.API.Infra
+namespace StoryTrails.Domain.Infra
 {
     public class DatabaseSettings:DbContext
     {
@@ -10,9 +10,9 @@ namespace StoryTrails.API.Infra
             
         }
 
-        DbSet<User> users { get; set; }
-        DbSet<Collection> collections { get; set; }
+        public DbSet<User> users { get; set; }
+        public DbSet<Collection> collections { get; set; }
 
-        DbSet<Book> books { get; set; }
+        public DbSet<Book> books { get; set; }
     }
 }

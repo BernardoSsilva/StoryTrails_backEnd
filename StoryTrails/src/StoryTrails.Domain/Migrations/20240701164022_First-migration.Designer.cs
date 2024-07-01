@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using StoryTrails.API.Infra;
+using StoryTrails.Domain.Infra;
 
 #nullable disable
 
-namespace StoryTrails.API.Migrations
+namespace StoryTrails.Domain.Migrations
 {
     [DbContext(typeof(DatabaseSettings))]
-    [Migration("20240701132002_First-Migration")]
-    partial class FirstMigration
+    [Migration("20240701164022_First-migration")]
+    partial class Firstmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace StoryTrails.API.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("StoryTrails.API.Entities.Book", b =>
+            modelBuilder.Entity("StoryTrails.Domain.Entities.Book", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -52,7 +52,7 @@ namespace StoryTrails.API.Migrations
                     b.ToTable("books");
                 });
 
-            modelBuilder.Entity("StoryTrails.API.Entities.Collection", b =>
+            modelBuilder.Entity("StoryTrails.Domain.Entities.Collection", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -73,7 +73,7 @@ namespace StoryTrails.API.Migrations
                     b.ToTable("collections");
                 });
 
-            modelBuilder.Entity("StoryTrails.API.Entities.User", b =>
+            modelBuilder.Entity("StoryTrails.Domain.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");

@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace StoryTrails.API.Migrations
+namespace StoryTrails.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class Firstmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

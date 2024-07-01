@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using StoryTrails.API.Infra;
+using StoryTrails.Application;
+
+using StoryTrails.Domain.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddEntityFrameworkNpgsql()
     .AddDbContext<DatabaseSettings>(options => options.UseNpgsql("Host=localhost;Port=5432;Pooling=true;Database=StoryTrails; User Id=postgres;Password=postgres"));
+
+builder.Services.AddApplication();
+
 
 var app = builder.Build();
 

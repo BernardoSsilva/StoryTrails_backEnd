@@ -1,4 +1,4 @@
-﻿namespace StoryTrails.API.Entities
+﻿namespace StoryTrails.Domain.Entities
 {
     public class User
     {
