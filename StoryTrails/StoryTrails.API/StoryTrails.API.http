@@ -1,0 +1,6 @@
+@StoryTrails.API_HostAddress = http://localhost:5014
+
+GET {{StoryTrails.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
