@@ -71,5 +71,26 @@ namespace StoryTrails.API.Controllers
            
             return Ok(response);
         }
+
+        [HttpPut]
+        [Route("edit/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateBookInfo(string id, [FromBody] BooksJsonRequest requestBody, [FromServices] IUpdateBookInfoUseCase useCase)
+        {
+            try
+            {
+
+            await useCase.Execute(id, requestBody);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+            return Ok();
+
+        }
+
     }
 }
