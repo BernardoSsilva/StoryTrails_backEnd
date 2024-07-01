@@ -92,5 +92,23 @@ namespace StoryTrails.API.Controllers
 
         }
 
+
+        [HttpDelete]
+        [Route("/delete/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<IActionResult> DeleteBookById(string id, [FromServices] IDeleteBookUseCase useCase)
+        {
+            try
+            {
+                await useCase.Execute(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
     }
 }
