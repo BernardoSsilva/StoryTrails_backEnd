@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoryTrails.Application.UseCases.Books.interfaces;
+using StoryTrails.Comunication.Request;
 using StoryTrails.Comunication.Responses.Books;
 
 
@@ -9,8 +10,27 @@ namespace StoryTrails.API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
+
+        [HttpPost]
+        [ProducesResponseType(typeof(BookShortResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateNewBook([FromBody] BooksJsonRequest requestBody, [FromServices] ICreateBookUseCase useCase)
+        {
+            try
+            {
+
+            var response = await useCase.Execute(requestBody);
+            return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
         [HttpGet]
-        [ProducesResponseType(typeof(List<MultipleBooksResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MultipleBooksResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> FindAllBooks ([FromServices] IFindAllBooksUseCase useCase)
         {

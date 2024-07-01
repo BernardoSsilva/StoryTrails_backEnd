@@ -19,7 +19,7 @@ namespace StoryTrails.API.UseCases.Books
         }
         public async Task<MultipleBooksResponse> Execute()
         {
-            var response = await _context.books.AsNoTracking().ToListAsync();
+            var response = await _context.Books.AsNoTracking().ToListAsync();
 
 
             return new MultipleBooksResponse

@@ -5,13 +5,13 @@
 namespace StoryTrails.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class Firstmigration : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "books",
+                name: "Books",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -23,11 +23,11 @@ namespace StoryTrails.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_books", x => x.Id);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "collections",
+                name: "Collections",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -37,11 +37,11 @@ namespace StoryTrails.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_collections", x => x.Id);
+                    table.PrimaryKey("PK_Collections", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -51,7 +51,7 @@ namespace StoryTrails.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
         }
 
@@ -59,13 +59,13 @@ namespace StoryTrails.Domain.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "books");
+                name: "Books");
 
             migrationBuilder.DropTable(
-                name: "collections");
+                name: "Collections");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "Users");
         }
     }
 }

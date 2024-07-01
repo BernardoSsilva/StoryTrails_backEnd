@@ -10,9 +10,9 @@ namespace StoryTrails.Domain.Infra
             
         }
 
-        public DbSet<User> users { get; set; }
-        public DbSet<Collection> collections { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Collection> Collections { get; set; }
 
-        public DbSet<Book> books { get; set; }
+        public DbSet<Book> Books { get; set; }
     }
 }

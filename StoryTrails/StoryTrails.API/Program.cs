@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddEntityFrameworkNpgsql()
-    .AddDbContext<DatabaseSettings>(options => options.UseNpgsql("Host=localhost;Port=5432;Pooling=true;Database=StoryTrails; User Id=postgres;Password=postgres"));
+    .AddDbContext<DatabaseSettings>(options => options.UseNpgsql("Host=localhost;Port=5432;Pooling=true;Database=StoryTrailsDatabase;User Id=postgres;Password=postgres"));
 
 builder.Services.AddApplication();
 

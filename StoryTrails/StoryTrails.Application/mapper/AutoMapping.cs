@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using StoryTrails.Comunication.Request;
 using StoryTrails.Comunication.Responses.Books;
 using StoryTrails.Domain.Entities;
 
@@ -15,13 +16,14 @@ namespace StoryTrails.API.mappers
 
         private void RequestToEntity()
         {
-            // CreateMap<BookRequestJson, Book>();
+             CreateMap<BooksJsonRequest, Book>();
         }
 
         private void EntityToResponse()
         {
             CreateMap<Book, BookShortResponse>();
             CreateMap<Book, BookDetailedResponse>();
+            CreateMap<BooksJsonRequest, BookShortResponse>();
         }
     }
 }

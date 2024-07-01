@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StoryTrails.API.mappers;
 using StoryTrails.API.UseCases.Books;
+using StoryTrails.Application.UseCases.Books;
 using StoryTrails.Application.UseCases.Books.interfaces;
 
 namespace StoryTrails.Application
@@ -23,6 +24,7 @@ namespace StoryTrails.Application
         private static void AddUseCases(IServiceCollection service)
         {
             service.AddScoped<IFindAllBooksUseCase, FindAllBooksUsecase>();
+            service.AddScoped<ICreateBookUseCase, CreateBookUseCase>();
         
         }
     }

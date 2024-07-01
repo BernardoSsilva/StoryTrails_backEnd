@@ -46,7 +46,7 @@ namespace StoryTrails.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("books");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("StoryTrails.Domain.Entities.Collection", b =>
@@ -67,7 +67,7 @@ namespace StoryTrails.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("collections");
+                    b.ToTable("Collections");
                 });
 
             modelBuilder.Entity("StoryTrails.Domain.Entities.User", b =>
@@ -89,7 +89,7 @@ namespace StoryTrails.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

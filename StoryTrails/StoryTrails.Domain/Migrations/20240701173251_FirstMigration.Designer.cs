@@ -11,8 +11,8 @@ using StoryTrails.Domain.Infra;
 namespace StoryTrails.Domain.Migrations
 {
     [DbContext(typeof(DatabaseSettings))]
-    [Migration("20240701164022_First-migration")]
-    partial class Firstmigration
+    [Migration("20240701173251_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace StoryTrails.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("books");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("StoryTrails.Domain.Entities.Collection", b =>
@@ -70,7 +70,7 @@ namespace StoryTrails.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("collections");
+                    b.ToTable("Collections");
                 });
 
             modelBuilder.Entity("StoryTrails.Domain.Entities.User", b =>
@@ -92,7 +92,7 @@ namespace StoryTrails.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
