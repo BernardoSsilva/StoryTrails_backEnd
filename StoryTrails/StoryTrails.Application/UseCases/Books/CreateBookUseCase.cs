@@ -52,8 +52,8 @@ namespace StoryTrails.Application.UseCases.Books
             var result = validator.Validate(request);
             if(!result.IsValid)
             {
-                throw new ArgumentException(result.Errors[0].ToString());
-
+                var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
+                throw new ArgumentException(errorMessages[0]);
             }
         }
     }

@@ -25,6 +25,7 @@ namespace StoryTrails.Application
         {
             service.AddScoped<IFindAllBooksUseCase, FindAllBooksUsecase>();
             service.AddScoped<ICreateBookUseCase, CreateBookUseCase>();
+            service.AddScoped<IFindBookByIdUseCase, FindBookByIdUseCase>();
         
         }
     }

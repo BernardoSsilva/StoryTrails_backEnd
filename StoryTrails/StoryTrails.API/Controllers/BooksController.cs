@@ -42,5 +42,19 @@ namespace StoryTrails.API.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(BookDetailedResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> FindBookById( string id, [FromServices] IFindBookByIdUseCase useCase)
+        {
+            var response = await useCase.Execute(id);
+
+            if(response is null)
+            {
+                return NotFound();
+            }
+            return Ok(response);
+        }
     }
 }
