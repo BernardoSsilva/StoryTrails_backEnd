@@ -3,6 +3,8 @@ using StoryTrails.API.mappers;
 using StoryTrails.API.UseCases.Books;
 using StoryTrails.Application.UseCases.Books;
 using StoryTrails.Application.UseCases.Books.interfaces;
+using StoryTrails.Application.UseCases.Collections;
+using StoryTrails.Application.UseCases.Collections.interfaces;
 
 namespace StoryTrails.Application
 {
@@ -29,6 +31,7 @@ namespace StoryTrails.Application
             service.AddScoped<IFindBooksByCollectionUseCase, FindBooksByCollectionUseCase > ();
             service.AddScoped< IUpdateBookInfoUseCase, UpdateBookUseCase > ();
             service.AddScoped<IDeleteBookUseCase, DeleteBookUseCase > ();
+            service.AddScoped<ICreateCollectionUseCase, CreateCollectionUseCase > ();
         
         }
     }
