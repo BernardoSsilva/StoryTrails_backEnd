@@ -37,5 +37,19 @@ namespace StoryTrails.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(CollectionSingleResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> FindCollectionById(string id,[FromServices] IFindCollectionByIdUseCase useCase)
+        {
+            var result = await useCase.Execute(id);
+            if(result is null)
+            {
+                return NotFound("Not found");
+            }
+
+            return Ok(result);
+        }
     }
 }
