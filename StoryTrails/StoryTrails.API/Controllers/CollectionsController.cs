@@ -73,5 +73,30 @@ namespace StoryTrails.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteCollection(string id, [FromServices] IDeleteCollectionUseCase useCase)
+        {
+            try
+            {
+                var result = await useCase.Execute(id);
+
+                if (result == false)
+                {
+                    return NotFound();
+                }
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

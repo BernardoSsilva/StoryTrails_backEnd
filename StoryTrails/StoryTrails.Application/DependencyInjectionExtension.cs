@@ -35,6 +35,7 @@ namespace StoryTrails.Application
             service.AddScoped<IGetAllCollectionsUseCase,GetAllCollectionsUseCase> ();
             service.AddScoped <IFindCollectionByIdUseCase, FindCollectionByIdUseCase > ();
             service.AddScoped <IUpdateCollectionUseCase, UpdateCollectionUseCase> ();
+            service.AddScoped <IDeleteCollectionUseCase, DeleteCollectionUseCase> ();
         
         }
     }
