@@ -51,5 +51,27 @@ namespace StoryTrails.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateCollection(string id, [FromBody] CollectionJsonRequest requetBody, [FromServices] IUpdateCollectionUseCase useCase)
+        {
+            try
+            {
+                var result = await useCase.Execute(id, requetBody);
+
+                if (result == false)
+                {
+                    return NotFound();
+                }
+                return NoContent();
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
