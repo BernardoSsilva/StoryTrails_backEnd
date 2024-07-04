@@ -12,11 +12,12 @@ namespace StoryTrails.API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateNewCollection([FromBody] CollectionJsonRequest requestBody, [FromServices] ICreateCollectionUseCase useCase) {
-           
-                await useCase.Execute(requestBody);
-                return Created(string.Empty, "Success");
-           
+        public async Task<IActionResult> CreateNewCollection([FromBody] CollectionJsonRequest requestBody, [FromServices] ICreateCollectionUseCase useCase)
+        {
+
+            await useCase.Execute(requestBody);
+            return Created(string.Empty, "Success");
+
         }
 
         [HttpGet]
@@ -26,7 +27,8 @@ namespace StoryTrails.API.Controllers
         {
             var result = await useCase.Execute();
 
-            if(result.Collections.Count == 0) {
+            if (result.Collections.Count == 0)
+            {
                 return NoContent();
             }
 
@@ -37,10 +39,10 @@ namespace StoryTrails.API.Controllers
         [Route("{id}")]
         [ProducesResponseType(typeof(CollectionSingleResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> FindCollectionById(string id,[FromServices] IFindCollectionByIdUseCase useCase)
+        public async Task<IActionResult> FindCollectionById(string id, [FromServices] IFindCollectionByIdUseCase useCase)
         {
             var result = await useCase.Execute(id);
-            if(result is null)
+            if (result is null)
             {
                 return NotFound("Not found");
             }
@@ -55,26 +57,26 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateCollection(string id, [FromBody] CollectionJsonRequest requetBody, [FromServices] IUpdateCollectionUseCase useCase)
         {
-          
-                var result = await useCase.Execute(id, requetBody);
 
-            
-                return NoContent();
-            
+            var result = await useCase.Execute(id, requetBody);
+
+
+            return NoContent();
+
         }
 
         [HttpDelete]
         [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteCollection(string id, [FromServices] IDeleteCollectionUseCase useCase)
         {
-          
-                var result = await useCase.Execute(id);
 
-           
-                return NoContent();
+            await useCase.Execute(id);
+
+
+            return Accepted();
 
         }
 

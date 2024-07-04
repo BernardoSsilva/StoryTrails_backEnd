@@ -51,5 +51,16 @@ namespace StoryTrails.API.Controllers
             await useCase.Execute(id, requestBody);
             return Ok();
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteUser([FromServices] IDeleteUserUseCase useCase, string id)
+        {
+            await useCase.Execute(id);
+            return Accepted();
+        }
+
     }
 }

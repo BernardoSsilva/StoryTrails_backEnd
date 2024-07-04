@@ -16,21 +16,21 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateNewBook([FromBody] BooksJsonRequest requestBody, [FromServices] ICreateBookUseCase useCase)
         {
-          
+
 
             var response = await useCase.Execute(requestBody);
             return Ok(response);
-         
+
         }
 
 
         [HttpGet]
         [ProducesResponseType(typeof(MultipleBooksResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> FindAllBooks ([FromServices] IFindAllBooksUseCase useCase)
+        public async Task<IActionResult> FindAllBooks([FromServices] IFindAllBooksUseCase useCase)
         {
             var response = await useCase.Execute();
-            if(response is null)
+            if (response is null)
             {
                 return NoContent();
             }
@@ -41,11 +41,11 @@ namespace StoryTrails.API.Controllers
         [Route("{id}")]
         [ProducesResponseType(typeof(BookDetailedResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> FindBookById( string id, [FromServices] IFindBookByIdUseCase useCase)
+        public async Task<IActionResult> FindBookById(string id, [FromServices] IFindBookByIdUseCase useCase)
         {
             var response = await useCase.Execute(id);
 
-            if(response is null)
+            if (response is null)
             {
                 return NotFound("Book not found");
             }
@@ -59,11 +59,11 @@ namespace StoryTrails.API.Controllers
         public async Task<IActionResult> ListBooksIntoCollection(string id, [FromServices] IFindBooksByCollectionUseCase useCase)
         {
             var response = await useCase.Execute(id);
-            if (response.books.Count<1 )
+            if (response.books.Count < 1)
             {
                 return NotFound("No books found on collection");
             }
-           
+
             return Ok(response);
         }
 
@@ -73,10 +73,10 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateBookInfo(string id, [FromBody] BooksJsonRequest requestBody, [FromServices] IUpdateBookInfoUseCase useCase)
         {
-           
+
 
             await useCase.Execute(id, requestBody);
-           
+
 
             return Ok();
 
@@ -85,15 +85,15 @@ namespace StoryTrails.API.Controllers
 
         [HttpDelete]
         [Route("/delete/{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> DeleteBookById(string id, [FromServices] IDeleteBookUseCase useCase)
         {
-          
-                await useCase.Execute(id);
-                return NoContent();
-       
+
+            await useCase.Execute(id);
+            return Accepted();
+
         }
     }
 }
