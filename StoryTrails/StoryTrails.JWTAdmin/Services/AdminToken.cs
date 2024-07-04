@@ -8,10 +8,11 @@ namespace StoryTrails.JWTAdmin.Services
     public class AdminToken
     {
 
+        public byte[] key { get; set; } = Encoding.ASCII.GetBytes("4e594798-6867-4dff-887a-9a7c12882b8e");
+
         public string Generate(TokenPayload payload)
         {
             var handler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("4e594798-6867-4dff-887a-9a7c12882b8e");
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             var ci = new ClaimsIdentity();
@@ -30,6 +31,24 @@ namespace StoryTrails.JWTAdmin.Services
             var tokenString = handler.WriteToken(token);
             return tokenString;
 
+        }
+
+        public bool ValiadateToken(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            SecurityToken validatedToken;
+            handler.ValidateToken(token, new TokenValidationParameters()
+            {
+                ValidateLifetime = false, // Because there is no expiration in the generated token
+                ValidateAudience = false, /// Because there is no expiration in the generated token
+                ValidateIssuer = false,   // Because there is no issuer in the generated token
+                ValidIssuer = "Sample",
+                ValidAudience = "Sample",
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            }, out validatedToken);
+
+            return true;
         }
     }
 }

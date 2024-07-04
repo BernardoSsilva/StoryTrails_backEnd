@@ -34,10 +34,15 @@ namespace StoryTrails.API.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(MultipleUsersResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> ListAllUsers([FromServices] IFindAllUsersUseCase useCase)
+        public async Task<IActionResult> ListAllUsers([FromServices] IFindAllUsersUseCase useCase, [FromHeader] string userToken)
         {
+            if (userToken is null)
+            {
+                return Unauthorized();
+            }
             var result = await useCase.Execute();
             if (result.Users.Count == 0)
+
             {
                 return NoContent();
             }
