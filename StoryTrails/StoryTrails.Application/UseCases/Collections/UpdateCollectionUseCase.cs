@@ -16,9 +16,9 @@ namespace StoryTrails.Application.UseCases.Collections
     internal class UpdateCollectionUseCase : IUpdateCollectionUseCase
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseSettings _repository;
+        private readonly Repository _repository;
 
-        public UpdateCollectionUseCase(DatabaseSettings repository, IMapper mapper)
+        public UpdateCollectionUseCase(Repository repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;

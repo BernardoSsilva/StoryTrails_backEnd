@@ -9,9 +9,9 @@ namespace StoryTrails.Application.UseCases.Users
     internal class FindAllUsersUseCase : IFindAllUsersUseCase
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseSettings _repository;
+        private readonly Repository _repository;
 
-        public FindAllUsersUseCase(IMapper mapper, DatabaseSettings repository )
+        public FindAllUsersUseCase(IMapper mapper, Repository repository )
         {
             
             _mapper = mapper;

@@ -11,10 +11,10 @@ namespace StoryTrails.Application.UseCases.Books
 {
     internal class UpdateBookUseCase : IUpdateBookInfoUseCase
     {
-        private readonly DatabaseSettings _repository;
+        private readonly Repository _repository;
         private readonly IMapper _mapper;
 
-        public UpdateBookUseCase(DatabaseSettings repository, IMapper mapper)
+        public UpdateBookUseCase(Repository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

@@ -16,9 +16,9 @@ namespace StoryTrails.Application.UseCases.Users
     public class RegisterUserUseCase : IRegisterUserUseCase
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseSettings _repository;
+        private readonly Repository _repository;
 
-        public RegisterUserUseCase(DatabaseSettings repository, IMapper mapper)
+        public RegisterUserUseCase(Repository repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;

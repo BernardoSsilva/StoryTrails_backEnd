@@ -9,9 +9,9 @@ namespace StoryTrails.Application.UseCases.Collections
     internal class DeleteCollectionUseCase : IDeleteCollectionUseCase
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseSettings _repository;
+        private readonly Repository _repository;
 
-        public DeleteCollectionUseCase(IMapper mapper, DatabaseSettings repository)
+        public DeleteCollectionUseCase(IMapper mapper, Repository repository)
         {
             _mapper = mapper;
             _repository = repository;

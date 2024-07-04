@@ -9,9 +9,9 @@ namespace StoryTrails.Application.UseCases.Collections
     internal class GetAllCollectionsUseCase : IGetAllCollectionsUseCase
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseSettings _repository;
+        private readonly Repository _repository;
 
-        public GetAllCollectionsUseCase(IMapper mapper,DatabaseSettings repository)
+        public GetAllCollectionsUseCase(IMapper mapper,Repository repository)
         {
             _mapper = mapper;
             _repository = repository;

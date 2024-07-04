@@ -9,8 +9,8 @@ namespace StoryTrails.Application.UseCases.Books
     public class DeleteBookUseCase: IDeleteBookUseCase
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseSettings _repository;
-        public DeleteBookUseCase(DatabaseSettings repository, IMapper mapper)
+        private readonly Repository _repository;
+        public DeleteBookUseCase(Repository repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;

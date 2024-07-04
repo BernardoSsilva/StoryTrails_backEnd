@@ -3,9 +3,9 @@ using StoryTrails.Domain.Entities;
 
 namespace StoryTrails.Domain.Infra
 {
-    public class DatabaseSettings:DbContext
+    public class Repository:DbContext
     {
-        public DatabaseSettings(DbContextOptions<DatabaseSettings> options):base(options)
+        public Repository(DbContextOptions<Repository> options):base(options)
         {
             
         }

@@ -14,7 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 builder.Services.AddEntityFrameworkNpgsql()
-    .AddDbContext<DatabaseSettings>(options => options.UseNpgsql("Host=localhost;Port=5432;Pooling=true;Database=StoryTrailsDatabase;User Id=postgres;Password=postgres"));
+    .AddDbContext<Repository>(options => options.UseNpgsql("Host=localhost;Port=5432;Pooling=true;Database=StoryTrailsDatabase;User Id=postgres;Password=postgres"));
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddApplication();
 

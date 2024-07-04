@@ -12,8 +12,8 @@ namespace StoryTrails.Application.UseCases.Books
     internal class CreateBookUseCase : ICreateBookUseCase
     {
         private readonly IMapper _mapper;
-        private readonly DatabaseSettings _repository;
-        public CreateBookUseCase(DatabaseSettings repository, IMapper mapper)
+        private readonly Repository _repository;
+        public CreateBookUseCase(Repository repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;

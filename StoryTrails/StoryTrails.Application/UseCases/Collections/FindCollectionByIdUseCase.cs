@@ -9,10 +9,10 @@ namespace StoryTrails.Application.UseCases.Collections
 {
     internal class FindCollectionByIdUseCase : IFindCollectionByIdUseCase
     {
-        private readonly DatabaseSettings _repository;
+        private readonly Repository _repository;
         private readonly IMapper _mapper;
 
-        public FindCollectionByIdUseCase(DatabaseSettings repository, IMapper mapper)
+        public FindCollectionByIdUseCase(Repository repository, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;

@@ -10,7 +10,7 @@ using StoryTrails.Domain.Infra;
 
 namespace StoryTrails.Domain.Migrations
 {
-    [DbContext(typeof(DatabaseSettings))]
+    [DbContext(typeof(Repository))]
     [Migration("20240701173251_FirstMigration")]
     partial class FirstMigration
     {

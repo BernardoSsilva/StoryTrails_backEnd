@@ -13,7 +13,7 @@ namespace StoryTrails.Application
 {
     public static class DependencyInjectionExtension
     {
-        
+
         public static void AddApplication(this IServiceCollection service)
         {
 
@@ -31,17 +31,19 @@ namespace StoryTrails.Application
             service.AddScoped<IFindAllBooksUseCase, FindAllBooksUsecase>();
             service.AddScoped<ICreateBookUseCase, CreateBookUseCase>();
             service.AddScoped<IFindBookByIdUseCase, FindBookByIdUseCase>();
-            service.AddScoped<IFindBooksByCollectionUseCase, FindBooksByCollectionUseCase > ();
-            service.AddScoped< IUpdateBookInfoUseCase, UpdateBookUseCase > ();
-            service.AddScoped<IDeleteBookUseCase, DeleteBookUseCase > ();
-            service.AddScoped<ICreateCollectionUseCase, CreateCollectionUseCase > ();
-            service.AddScoped<IGetAllCollectionsUseCase,GetAllCollectionsUseCase> ();
-            service.AddScoped <IFindCollectionByIdUseCase, FindCollectionByIdUseCase > ();
-            service.AddScoped <IUpdateCollectionUseCase, UpdateCollectionUseCase> ();
-            service.AddScoped <IDeleteCollectionUseCase, DeleteCollectionUseCase> ();
-            service.AddScoped <IRegisterUserUseCase, RegisterUserUseCase > ();
-            service.AddScoped <IFindAllUsersUseCase, FindAllUsersUseCase > ();
-        
+            service.AddScoped<IFindBooksByCollectionUseCase, FindBooksByCollectionUseCase>();
+            service.AddScoped<IUpdateBookInfoUseCase, UpdateBookUseCase>();
+            service.AddScoped<IDeleteBookUseCase, DeleteBookUseCase>();
+            service.AddScoped<ICreateCollectionUseCase, CreateCollectionUseCase>();
+            service.AddScoped<IGetAllCollectionsUseCase, GetAllCollectionsUseCase>();
+            service.AddScoped<IFindCollectionByIdUseCase, FindCollectionByIdUseCase>();
+            service.AddScoped<IUpdateCollectionUseCase, UpdateCollectionUseCase>();
+            service.AddScoped<IDeleteCollectionUseCase, DeleteCollectionUseCase>();
+            service.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+            service.AddScoped<IFindAllUsersUseCase, FindAllUsersUseCase>();
+            service.AddScoped<IFindUserByIdUseCase, FindUserByIdUseCase>();
+            service.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
+
         }
     }
 

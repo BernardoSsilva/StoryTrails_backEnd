@@ -10,9 +10,9 @@ namespace StoryTrails.API.UseCases.Books
 
     public class FindAllBooksUsecase: IFindAllBooksUseCase
     {
-        private readonly DatabaseSettings _context;
+        private readonly Repository _context;
         private readonly IMapper _mapper;
-        public FindAllBooksUsecase(IMapper mapper, DatabaseSettings context)
+        public FindAllBooksUsecase(IMapper mapper, Repository context)
         {
             _context = context;
             _mapper = mapper;

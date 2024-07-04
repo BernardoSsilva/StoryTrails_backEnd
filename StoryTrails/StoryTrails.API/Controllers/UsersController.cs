@@ -15,8 +15,8 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterNewUser([FromBody] UserJsonRequest requestBody, [FromServices] IRegisterUserUseCase useCase)
         {
-                var result = await useCase.Execute(requestBody);
-                return Created(string.Empty,result);  
+            var result = await useCase.Execute(requestBody);
+            return Created(string.Empty, result);
         }
 
         [HttpGet]
@@ -24,12 +24,32 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> ListAllUsers([FromServices] IFindAllUsersUseCase useCase)
         {
-            var result =await  useCase.Execute();
-            if(result.Users.Count == 0)
+            var result = await useCase.Execute();
+            if (result.Users.Count == 0)
             {
                 return NoContent();
             }
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> FindUserById([FromServices] IFindUserByIdUseCase useCase, string id)
+        {
+            var result = await useCase.Execute(id);
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateUser([FromServices] IUpdateUserUseCase useCase, string id, [FromBody] UserJsonRequest requestBody)
+        {
+            await useCase.Execute(id, requestBody);
+            return Ok();
         }
     }
 }

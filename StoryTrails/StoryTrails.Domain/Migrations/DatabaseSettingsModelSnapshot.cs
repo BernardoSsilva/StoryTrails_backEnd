@@ -9,7 +9,7 @@ using StoryTrails.Domain.Infra;
 
 namespace StoryTrails.Domain.Migrations
 {
-    [DbContext(typeof(DatabaseSettings))]
+    [DbContext(typeof(Repository))]
     partial class DatabaseSettingsModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
