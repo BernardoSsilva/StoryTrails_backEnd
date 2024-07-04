@@ -4,6 +4,7 @@ using StoryTrails.Application.UseCases.Collections.interfaces;
 using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Responses.Collections;
 using StoryTrails.Domain.Infra;
+using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.Application.UseCases.Collections
 {
@@ -17,9 +18,11 @@ namespace StoryTrails.Application.UseCases.Collections
             _mapper = mapper;
             _repository = repository;
         }
-        public async Task<CollectionSingleResponse> Execute(string id)
+        public async Task<CollectionSingleResponse> Execute(string id, string userToken)
         {
-            var result = await _repository.Collections.FirstOrDefaultAsync(collection => collection.Id == id);
+            var tokenAdmin = new AdminToken();
+            var decodedToken = tokenAdmin.DecodeToken(userToken);
+            var result = await _repository.Collections.FirstOrDefaultAsync(collection => collection.Id == id && collection.UserId == decodedToken.UserId.ToString());
 
             return _mapper.Map<CollectionSingleResponse>(result);
         }

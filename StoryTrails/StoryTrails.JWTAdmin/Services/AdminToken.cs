@@ -17,7 +17,7 @@ namespace StoryTrails.JWTAdmin.Services
 
             var ci = new ClaimsIdentity();
             ci.AddClaim(new Claim(ClaimTypes.Name, payload.UserLogin));
-            ci.AddClaim(new Claim(ClaimTypes.NameIdentifier, payload.UserId));
+            ci.AddClaim(new Claim(ClaimTypes.Authentication, payload.UserId));
 
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -33,7 +33,7 @@ namespace StoryTrails.JWTAdmin.Services
 
         }
 
-        public bool ValiadateToken(string token)
+        public bool ValidateToken(string token)
         {
             var handler = new JwtSecurityTokenHandler();
 
@@ -50,5 +50,38 @@ namespace StoryTrails.JWTAdmin.Services
 
             return true;
         }
+        public TokenPayload DecodeToken(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+
+            try
+            {
+                SecurityToken validatedToken;
+                var principal = handler.ValidateToken(token, validationParameters, out validatedToken);
+
+                var userId = principal.FindFirst(ClaimTypes.Authentication)?.Value ?? string.Empty;
+                var userLogin = principal.FindFirst(ClaimTypes.Name)?.Value ?? string.Empty;
+
+                return new TokenPayload
+                {
+                    UserId = userId,
+                    UserLogin = userLogin
+                };
+            }
+            catch (Exception)
+            {
+                // Token validation failed
+                return null;
+            }
+        }
+
     }
 }

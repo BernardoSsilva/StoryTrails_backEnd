@@ -6,6 +6,5 @@
 
         public int CollectionObjective { get; set; }
 
-        public string UserId { get; set; } = string.Empty;
     }
 }

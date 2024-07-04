@@ -4,6 +4,6 @@ namespace StoryTrails.Application.UseCases.Collections.interfaces
 {
     public interface IGetAllCollectionsUseCase
     {
-        Task<MultipleCollectionResponse> Execute();
+        Task<MultipleCollectionResponse> Execute(string userToken);
     }
 }

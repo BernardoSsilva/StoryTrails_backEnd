@@ -5,6 +5,7 @@ using StoryTrails.Application.Validators;
 using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Domain.Infra;
+using StoryTrails.JWTAdmin.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,22 +24,29 @@ namespace StoryTrails.Application.UseCases.Collections
             _mapper = mapper;
             _repository = repository;
         }
-        public async Task<bool> Execute(string id, CollectionJsonRequest requestBody)
+        public async Task<bool> Execute(string id, CollectionJsonRequest requestBody, string userToken)
         {
             try
             {
+                var tokenAdmin = new AdminToken();
+                var decodedToken = tokenAdmin.DecodeToken(userToken);
                 Validate(requestBody);
                 var entityToUpdate = await _repository.Collections.FirstOrDefaultAsync(collection => collection.Id == id);
-                if (entityToUpdate is null) {
-                    throw new NotFoundError("Collection Not found");   
+                if (entityToUpdate is null)
+                {
+                    throw new NotFoundError("Collection Not found");
+                }
+                if (entityToUpdate.UserId != decodedToken.UserId.ToString())
+                {
+                    throw new UnauthorizedAccessError("Unauthorized");
                 }
 
-                var newData =  _mapper.Map(requestBody, entityToUpdate);
-                 _repository.Update(newData);
+                var newData = _mapper.Map(requestBody, entityToUpdate);
+                _repository.Update(newData);
                 await _repository.SaveChangesAsync();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new BadRequestError(ex.Message);
             }

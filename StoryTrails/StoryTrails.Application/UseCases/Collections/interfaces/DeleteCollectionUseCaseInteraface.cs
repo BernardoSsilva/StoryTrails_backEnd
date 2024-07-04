@@ -2,7 +2,7 @@
 {
     public interface IDeleteCollectionUseCase
     {
-        Task<bool> Execute(string id);
+        Task<bool> Execute(string id, string userToken);
 
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Users.interfaces;
 using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Domain.Infra;
+using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.Application.UseCases.Users
 {
@@ -19,10 +20,19 @@ namespace StoryTrails.Application.UseCases.Users
             _mapper = mapper;
             _repository = repository;
         }
-        public async Task Execute(string id)
+        public async Task Execute(string id, string token)
         {
 
             var userToExclude = await _repository.Users.FirstOrDefaultAsync(user => user.Id == id);
+
+            var tokenAdmin = new AdminToken();
+            var decodedToken = tokenAdmin.DecodeToken(token);
+
+
+            if (userToExclude.Id != decodedToken.UserId)
+            {
+                throw new UnauthorizedAccessError("Unauthorized");
+            }
             if (userToExclude == null)
             {
                 throw new NotFoundError($"User with id {id} not found");

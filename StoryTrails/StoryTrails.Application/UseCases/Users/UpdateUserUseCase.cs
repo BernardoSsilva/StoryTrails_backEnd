@@ -7,6 +7,7 @@ using StoryTrails.Application.UseCases.Users.interfaces;
 using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Domain.Infra;
+using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.Application.UseCases.Users
 {
@@ -21,9 +22,18 @@ namespace StoryTrails.Application.UseCases.Users
             _repository = repository;
 
         }
-        public async Task Execute(string id, UserJsonRequest requestBody)
+        public async Task Execute(string id, UserJsonRequest requestBody, string userToken)
         {
+
+            var tokenAdmin = new AdminToken();
+            var decodedToken = tokenAdmin.DecodeToken(userToken);
+
             var entityToEdit = await _repository.Users.FirstOrDefaultAsync(user => user.Id == id);
+
+            if (entityToEdit.Id != decodedToken.UserId)
+            {
+                throw new UnauthorizedAccessError("Unauthorized");
+            }
             if (entityToEdit is null)
             {
                 throw new NotFoundError($"User with id {id} has not founded");

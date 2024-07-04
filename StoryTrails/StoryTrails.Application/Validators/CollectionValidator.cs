@@ -9,7 +9,6 @@ namespace StoryTrails.Application.Validators
         {
             RuleFor(collection => collection.CollectionObjective).GreaterThan(0).WithMessage("Collection objective must be bigger than 0");
             RuleFor(Collection => Collection.CollectionName).NotEmpty().WithMessage("Collection name is required");
-            RuleFor(Collection => Collection.UserId).NotEmpty().WithMessage("User id is required");
         }
     }
 }

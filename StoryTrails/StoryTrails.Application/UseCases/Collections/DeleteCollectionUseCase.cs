@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Collections.interfaces;
 using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Domain.Infra;
+using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.Application.UseCases.Collections
 {
@@ -16,22 +17,30 @@ namespace StoryTrails.Application.UseCases.Collections
             _mapper = mapper;
             _repository = repository;
         }
-        public async Task<bool> Execute(string id)
+        public async Task<bool> Execute(string id, string userToken)
         {
             try
             {
+                var tokenAdmin = new AdminToken();
+                var decodedToken = tokenAdmin.DecodeToken(userToken);
                 var collectionToDelete = await _repository.Collections.FirstOrDefaultAsync(collection => collection.Id == id);
 
-                if (collectionToDelete is null) {
+                if (collectionToDelete is null)
+                {
                     throw new NotFoundError("Collection not found");
                 }
+                if (collectionToDelete.UserId != decodedToken.UserId.ToString())
+                {
+                    throw new UnauthorizedAccessError("Unauthorized");
+                }
+
 
                 _repository.Collections.Remove(collectionToDelete);
                 await _repository.SaveChangesAsync();
                 return true;
 
             }
-            catch (Exception ex) 
+            catch
             {
                 throw new BadRequestError("bad request");
             }

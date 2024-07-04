@@ -5,6 +5,7 @@ using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Domain.Entities;
 using StoryTrails.Domain.Infra;
+using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.Application.UseCases.Collections
 {
@@ -18,15 +19,18 @@ namespace StoryTrails.Application.UseCases.Collections
             _mapper = mapper;
             _repository = repository;
         }
-        public async Task Execute(CollectionJsonRequest request)
+        public async Task Execute(CollectionJsonRequest request, string userToken)
         {
-          
-                Validate(request);
-                var entity = _mapper.Map<Collection>(request);
-                await _repository.Collections.AddAsync(entity); 
-                await _repository.SaveChangesAsync();
+            var tokenAdmin = new AdminToken();
+            var decodedToken = tokenAdmin.DecodeToken(userToken);
 
-           
+            Validate(request);
+            var entity = _mapper.Map<Collection>(request);
+            entity.UserId = decodedToken.UserId.ToString();
+            await _repository.Collections.AddAsync(entity);
+            await _repository.SaveChangesAsync();
+
+
         }
 
         public void Validate(CollectionJsonRequest request)

@@ -2,6 +2,7 @@
 using StoryTrails.Application.UseCases.Users.interfaces;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Comunication.Responses.Users;
+using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.API.Controllers
 {
@@ -32,7 +33,7 @@ namespace StoryTrails.API.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(MultipleUsersResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> ListAllUsers([FromServices] IFindAllUsersUseCase useCase, [FromHeader] string userToken)
         {
@@ -40,43 +41,73 @@ namespace StoryTrails.API.Controllers
             {
                 return Unauthorized();
             }
-            var result = await useCase.Execute();
-            if (result.Users.Count == 0)
 
+            var tokenAdmin = new AdminToken();
+
+
+            if (tokenAdmin.ValidateToken(userToken))
             {
-                return NoContent();
+
+                var result = await useCase.Execute();
+                if (result.Users.Count == 0)
+
+                {
+                    return NoContent();
+                }
+                return Ok(result);
             }
-            return Ok(result);
+
+            return Unauthorized();
+
         }
 
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> FindUserById([FromServices] IFindUserByIdUseCase useCase, string id)
+        public async Task<IActionResult> FindUserById([FromServices] IFindUserByIdUseCase useCase, string id, [FromHeader] string userToken)
         {
-            var result = await useCase.Execute(id);
-            return Ok(result);
+            var tokenAdmin = new AdminToken();
+
+            if (tokenAdmin.ValidateToken(userToken))
+            {
+                var result = await useCase.Execute(id);
+                return Ok(result);
+            }
+            return Unauthorized();
         }
 
         [HttpPut]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateUser([FromServices] IUpdateUserUseCase useCase, string id, [FromBody] UserJsonRequest requestBody)
+        public async Task<IActionResult> UpdateUser([FromServices] IUpdateUserUseCase useCase, string id, [FromBody] UserJsonRequest requestBody, [FromHeader] string userToken)
         {
-            await useCase.Execute(id, requestBody);
-            return Ok();
+            var tokenAdmin = new AdminToken();
+
+
+            if (tokenAdmin.ValidateToken(userToken))
+            {
+                await useCase.Execute(id, requestBody, userToken);
+                return Ok();
+            }
+            return Unauthorized();
         }
 
         [HttpDelete]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteUser([FromServices] IDeleteUserUseCase useCase, string id)
+        public async Task<IActionResult> DeleteUser([FromServices] IDeleteUserUseCase useCase, string id, [FromHeader] string userToken)
         {
-            await useCase.Execute(id);
-            return Accepted();
+            var tokenAdmin = new AdminToken();
+
+            if (tokenAdmin.ValidateToken(userToken))
+            {
+                await useCase.Execute(id, userToken);
+                return Accepted();
+            }
+            return Unauthorized();
         }
 
     }

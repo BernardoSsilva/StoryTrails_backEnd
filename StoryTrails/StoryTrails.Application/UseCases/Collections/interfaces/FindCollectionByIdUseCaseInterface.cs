@@ -4,6 +4,6 @@ namespace StoryTrails.Application.UseCases.Collections.interfaces
 {
     public interface IFindCollectionByIdUseCase
     {
-        Task<CollectionSingleResponse>  Execute(string id);
+        Task<CollectionSingleResponse> Execute(string id, string userToken);
     }
 }

@@ -9,6 +9,6 @@ namespace StoryTrails.Application.UseCases.Collections.interfaces
 {
     public interface IUpdateCollectionUseCase
     {
-        Task<bool> Execute(string id, CollectionJsonRequest requestBody);
+        Task<bool> Execute(string id, CollectionJsonRequest requestBody, string userToken);
     }
 }
