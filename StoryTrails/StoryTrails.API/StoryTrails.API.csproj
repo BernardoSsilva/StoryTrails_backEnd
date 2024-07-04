@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
@@ -21,6 +22,7 @@
     <ProjectReference Include="..\StoryTrails.Application\StoryTrails.Application.csproj" />
     <ProjectReference Include="..\StoryTrails.Comunication\StoryTrails.Comunication.csproj" />
     <ProjectReference Include="..\StoryTrails.Domain\StoryTrails.Domain.csproj" />
+    <ProjectReference Include="..\StoryTrails.JWTAdmin\StoryTrails.JWTAdmin.csproj" />
   </ItemGroup>
 
 </Project>

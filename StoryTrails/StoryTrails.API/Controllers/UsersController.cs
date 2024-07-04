@@ -19,6 +19,18 @@ namespace StoryTrails.API.Controllers
             return Created(string.Empty, result);
         }
 
+        [HttpPost]
+        [Route("authenticate")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> AuthenticateUser([FromBody] UserAuthenticationBody requestBody, [FromServices] IAuthenticateUserUseCase useCase)
+        {
+            var result = await useCase.Execute(requestBody);
+            return Accepted(result);
+        }
+
+
         [HttpGet]
         [ProducesResponseType(typeof(MultipleUsersResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

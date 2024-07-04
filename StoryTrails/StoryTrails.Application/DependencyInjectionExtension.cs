@@ -44,6 +44,7 @@ namespace StoryTrails.Application
             service.AddScoped<IFindUserByIdUseCase, FindUserByIdUseCase>();
             service.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
             service.AddScoped<IDeleteUserUseCase, DeleteUserUseCase>();
+             service.AddScoped< IAuthenticateUserUseCase, AuthenticateUserUseCase  > ();
 
         }
     }
