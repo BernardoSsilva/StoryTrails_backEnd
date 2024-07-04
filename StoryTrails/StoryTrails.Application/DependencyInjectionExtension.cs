@@ -8,6 +8,7 @@ using StoryTrails.Application.UseCases.Collections.interfaces;
 using StoryTrails.Application.UseCases.Users.interfaces;
 using StoryTrails.Application.UseCases.Users;
 
+
 namespace StoryTrails.Application
 {
     public static class DependencyInjectionExtension
@@ -39,6 +40,7 @@ namespace StoryTrails.Application
             service.AddScoped <IUpdateCollectionUseCase, UpdateCollectionUseCase> ();
             service.AddScoped <IDeleteCollectionUseCase, DeleteCollectionUseCase> ();
             service.AddScoped <IRegisterUserUseCase, RegisterUserUseCase > ();
+            service.AddScoped <IFindAllUsersUseCase, FindAllUsersUseCase > ();
         
         }
     }

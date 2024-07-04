@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoryTrails.Application.UseCases.Users.interfaces;
 using StoryTrails.Comunication.Request;
+using StoryTrails.Comunication.Responses.Users;
 
 namespace StoryTrails.API.Controllers
 {
@@ -22,6 +23,19 @@ namespace StoryTrails.API.Controllers
             catch (Exception ex) {
                 return BadRequest(ex.Message);
                     }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(MultipleUsersResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> ListAllUsers([FromServices] IFindAllUsersUseCase useCase)
+        {
+            var result =await  useCase.Execute();
+            if(result.Users.Count == 0)
+            {
+                return NoContent();
+            }
+            return Ok(result);
         }
     }
 }

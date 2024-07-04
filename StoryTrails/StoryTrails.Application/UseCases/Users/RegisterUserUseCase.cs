@@ -2,10 +2,11 @@
 using StoryTrails.Application.UseCases.Users.interfaces;
 using StoryTrails.Application.Validators;
 using StoryTrails.Comunication.Request;
+using StoryTrails.Comunication.Responses.Users;
 using StoryTrails.Domain.Infra;
 using StoryTrails.Domain.Entities;
+
 using System.Security.Cryptography;
-using StoryTrails.Comunication.Responses.Users;
 using System.Text;
 
 namespace StoryTrails.Application.UseCases.Users
@@ -25,6 +26,7 @@ namespace StoryTrails.Application.UseCases.Users
             Validate(request);
 
             var entity = _mapper.Map<User>(request);
+
             HashAlgorithm algorithm = SHA256.Create();
 
             entity.UserPassword = string.Join("", MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(entity.UserPassword)).Select(s => s.ToString("x2")));
