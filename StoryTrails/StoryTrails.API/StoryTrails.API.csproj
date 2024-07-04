@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StoryTraills.Communication\StoryTraills.Communication.csproj" />
     <ProjectReference Include="..\StoryTrails.Application\StoryTrails.Application.csproj" />
-    <ProjectReference Include="..\StoryTrails.Comunication\StoryTrails.Comunication.csproj" />
     <ProjectReference Include="..\StoryTrails.Domain\StoryTrails.Domain.csproj" />
     <ProjectReference Include="..\StoryTrails.JWTAdmin\StoryTrails.JWTAdmin.csproj" />
   </ItemGroup>

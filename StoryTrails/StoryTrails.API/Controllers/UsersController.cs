@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoryTrails.Application.UseCases.Users.interfaces;
-using StoryTrails.Comunication.Request;
-using StoryTrails.Comunication.Responses.Users;
+using StoryTrails.Communication.Request;
+using StoryTrails.Communication.Responses.Users;
 using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.API.Controllers

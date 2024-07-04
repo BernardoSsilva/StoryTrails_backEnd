@@ -28,7 +28,7 @@ namespace StoryTrails.Application
         }
         private static void AddUseCases(IServiceCollection service)
         {
-            service.AddScoped<IFindAllBooksUseCase, FindAllBooksUsecase>();
+            service.AddScoped<IFindAllBooksUseCase, FindAllBooksUseCase>();
             service.AddScoped<ICreateBookUseCase, CreateBookUseCase>();
             service.AddScoped<IFindBookByIdUseCase, FindBookByIdUseCase>();
             service.AddScoped<IFindBooksByCollectionUseCase, FindBooksByCollectionUseCase>();
@@ -44,7 +44,7 @@ namespace StoryTrails.Application
             service.AddScoped<IFindUserByIdUseCase, FindUserByIdUseCase>();
             service.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
             service.AddScoped<IDeleteUserUseCase, DeleteUserUseCase>();
-             service.AddScoped< IAuthenticateUserUseCase, AuthenticateUserUseCase  > ();
+            service.AddScoped<IAuthenticateUserUseCase, AuthenticateUserUseCase>();
 
         }
     }

@@ -1,4 +1,4 @@
-﻿using StoryTrails.Comunication.Responses.Users;
+﻿using StoryTrails.Communication.Responses.Users;
 
 namespace StoryTrails.Application.UseCases.Users.interfaces
 {

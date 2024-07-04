@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StoryTrails.Comunication\StoryTrails.Comunication.csproj" />
+    <ProjectReference Include="..\StoryTraills.Communication\StoryTraills.Communication.csproj" />
     <ProjectReference Include="..\StoryTrails.Domain\StoryTrails.Domain.csproj" />
     <ProjectReference Include="..\StoryTrails.JWTAdmin\StoryTrails.JWTAdmin.csproj" />
   </ItemGroup>

@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Books.interfaces;
 using StoryTrails.Application.Validators;
-using StoryTrails.Comunication.Exceptions;
-using StoryTrails.Comunication.Request;
+using StoryTrails.Communication.Exceptions;
+using StoryTrails.Communication.Request;
 using StoryTrails.Domain.Infra;
+using StoryTrails.JWTAdmin.Services;
 using System.Diagnostics;
 
 namespace StoryTrails.Application.UseCases.Books
@@ -19,19 +20,25 @@ namespace StoryTrails.Application.UseCases.Books
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task Execute(string id, BooksJsonRequest requestBody)
+        public async Task Execute(string id, BooksJsonRequest requestBody, string userToken)
         {
+            var tokenAdmin = new AdminToken();
+            var decodedToken = tokenAdmin.DecodeToken(userToken);
             var bookToEdit = await _repository.Books.FirstOrDefaultAsync(book => book.Id == id);
 
 
             Validate(requestBody);
 
 
-            if (bookToEdit == null) 
+            if (bookToEdit == null)
             {
                 throw new NotFoundError("not found");
             }
 
+            if (bookToEdit.User != decodedToken.UserId.ToString())
+            {
+                throw new UnauthorizedAccessError("Unauthorized");
+            }
             _mapper.Map(requestBody, bookToEdit);
             _repository.Update(bookToEdit);
             await _repository.SaveChangesAsync();

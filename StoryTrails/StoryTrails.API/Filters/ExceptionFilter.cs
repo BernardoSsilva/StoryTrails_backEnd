@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
-using StoryTrails.Comunication.Exceptions;
+using StoryTrails.Communication.Exceptions;
 
 namespace StoryTrails.API.Filters
 {
-    public class ExceptionFilter:IExceptionFilter
+    public class ExceptionFilter : IExceptionFilter
     {
 
         public void OnException(ExceptionContext context)
@@ -33,5 +33,5 @@ namespace StoryTrails.API.Filters
             context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Result = new ObjectResult(errorRespone);
         }
-}
+    }
 }

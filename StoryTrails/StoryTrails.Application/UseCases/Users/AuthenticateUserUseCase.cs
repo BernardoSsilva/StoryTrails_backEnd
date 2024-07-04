@@ -3,12 +3,12 @@ using System.Text;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Users.interfaces;
-using StoryTrails.Comunication.Exceptions;
-using StoryTrails.Comunication.Request;
+using StoryTrails.Communication.Exceptions;
+using StoryTrails.Communication.Request;
 using StoryTrails.Domain.Infra;
 using StoryTrails.JWTAdmin.Services;
 using StoryTrails.JWTAdmin;
-using StoryTrails.Comunication.Responses.Users;
+using StoryTrails.Communication.Responses.Users;
 
 
 namespace StoryTrails.Application.UseCases.Users

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Collections.interfaces;
-using StoryTrails.Comunication.Exceptions;
+using StoryTrails.Communication.Exceptions;
 using StoryTrails.Domain.Infra;
 using StoryTrails.JWTAdmin.Services;
 

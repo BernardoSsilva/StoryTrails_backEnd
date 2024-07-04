@@ -1,4 +1,4 @@
-﻿using StoryTrails.Comunication.Request;
+﻿using StoryTrails.Communication.Request;
 
 namespace StoryTrails.Application.UseCases.Collections.interfaces
 {

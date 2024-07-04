@@ -2,6 +2,6 @@
 {
     public interface IDeleteBookUseCase
     {
-        Task Execute(string id);
+        Task Execute(string id, string userToken);
     }
 }

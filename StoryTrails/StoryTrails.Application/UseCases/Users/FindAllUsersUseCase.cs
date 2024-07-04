@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Users.interfaces;
-using StoryTrails.Comunication.Responses.Users;
+using StoryTrails.Communication.Responses.Users;
 using StoryTrails.Domain.Infra;
 
 namespace StoryTrails.Application.UseCases.Users
@@ -11,9 +11,9 @@ namespace StoryTrails.Application.UseCases.Users
         private readonly IMapper _mapper;
         private readonly Repository _repository;
 
-        public FindAllUsersUseCase(IMapper mapper, Repository repository )
+        public FindAllUsersUseCase(IMapper mapper, Repository repository)
         {
-            
+
             _mapper = mapper;
             _repository = repository;
         }

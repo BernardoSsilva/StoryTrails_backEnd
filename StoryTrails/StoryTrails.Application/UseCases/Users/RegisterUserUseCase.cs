@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using StoryTrails.Application.UseCases.Users.interfaces;
 using StoryTrails.Application.Validators;
-using StoryTrails.Comunication.Request;
-using StoryTrails.Comunication.Responses.Users;
+using StoryTrails.Communication.Request;
+using StoryTrails.Communication.Responses.Users;
 using StoryTrails.Domain.Infra;
 using StoryTrails.Domain.Entities;
 
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using StoryTrails.Comunication.Exceptions;
+using StoryTrails.Communication.Exceptions;
 
 namespace StoryTrails.Application.UseCases.Users
 {
@@ -44,7 +44,8 @@ namespace StoryTrails.Application.UseCases.Users
             return _mapper.Map<UserResponse>(entity);
         }
 
-        public void Validate(UserJsonRequest request) {
+        public void Validate(UserJsonRequest request)
+        {
 
             var validator = new UserValidator();
             var result = validator.Validate(request);

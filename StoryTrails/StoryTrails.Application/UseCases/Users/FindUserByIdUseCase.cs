@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Users.interfaces;
-using StoryTrails.Comunication.Exceptions;
-using StoryTrails.Comunication.Responses.Users;
+using StoryTrails.Communication.Exceptions;
+using StoryTrails.Communication.Responses.Users;
 using StoryTrails.Domain.Infra;
 
 namespace StoryTrails.Application.UseCases.Users
@@ -21,7 +21,7 @@ namespace StoryTrails.Application.UseCases.Users
         public async Task<UserResponse> Execute(string id)
         {
             var result = await _repository.Users.FirstOrDefaultAsync(user => user.Id == id);
-            if(result == null)
+            if (result == null)
             {
                 throw new NotFoundError("User not found");
             }

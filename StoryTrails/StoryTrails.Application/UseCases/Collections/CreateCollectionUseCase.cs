@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using StoryTrails.Application.UseCases.Collections.interfaces;
 using StoryTrails.Application.Validators;
-using StoryTrails.Comunication.Exceptions;
-using StoryTrails.Comunication.Request;
+using StoryTrails.Communication.Exceptions;
+using StoryTrails.Communication.Request;
 using StoryTrails.Domain.Entities;
 using StoryTrails.Domain.Infra;
 using StoryTrails.JWTAdmin.Services;

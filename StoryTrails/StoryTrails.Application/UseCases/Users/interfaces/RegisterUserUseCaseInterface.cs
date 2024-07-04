@@ -1,5 +1,5 @@
-﻿using StoryTrails.Comunication.Request;
-using StoryTrails.Comunication.Responses.Users;
+﻿using StoryTrails.Communication.Request;
+using StoryTrails.Communication.Responses.Users;
 
 namespace StoryTrails.Application.UseCases.Users.interfaces
 {

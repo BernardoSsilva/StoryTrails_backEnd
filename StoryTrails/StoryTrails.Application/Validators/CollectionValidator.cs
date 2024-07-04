@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using StoryTrails.Comunication.Request;
+using StoryTrails.Communication.Request;
 
 namespace StoryTrails.Application.Validators
 {
-    internal class CollectionValidator: AbstractValidator<CollectionJsonRequest>
+    internal class CollectionValidator : AbstractValidator<CollectionJsonRequest>
     {
         public CollectionValidator()
         {

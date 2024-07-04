@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoryTrails.API", "StoryTra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoryTrails.Application", "StoryTrails.Application\StoryTrails.Application.csproj", "{7B520B1D-C517-44A0-B9FF-281D3F731ADE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoryTrails.Comunication", "StoryTrails.Comunication\StoryTrails.Comunication.csproj", "{0D076B53-18EC-4F3D-B8DF-B8C117475CA1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoryTrails.Domain", "StoryTrails.Domain\StoryTrails.Domain.csproj", "{82F1F2DC-6C7E-4F2E-A361-1167932B91A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoryTrails.JWTAdmin", "StoryTrails.JWTAdmin\StoryTrails.JWTAdmin.csproj", "{75950246-0F68-451D-AA72-F8134417031D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoryTrails.JWTAdmin", "StoryTrails.JWTAdmin\StoryTrails.JWTAdmin.csproj", "{75950246-0F68-451D-AA72-F8134417031D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoryTraills.Communication", "StoryTraills.Communication\StoryTraills.Communication.csproj", "{2F535A11-BC24-4C96-B0B2-A283AEFAA35F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		{7B520B1D-C517-44A0-B9FF-281D3F731ADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B520B1D-C517-44A0-B9FF-281D3F731ADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B520B1D-C517-44A0-B9FF-281D3F731ADE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D076B53-18EC-4F3D-B8DF-B8C117475CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D076B53-18EC-4F3D-B8DF-B8C117475CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D076B53-18EC-4F3D-B8DF-B8C117475CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D076B53-18EC-4F3D-B8DF-B8C117475CA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82F1F2DC-6C7E-4F2E-A361-1167932B91A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82F1F2DC-6C7E-4F2E-A361-1167932B91A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82F1F2DC-6C7E-4F2E-A361-1167932B91A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,6 +39,10 @@ Global
 		{75950246-0F68-451D-AA72-F8134417031D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75950246-0F68-451D-AA72-F8134417031D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75950246-0F68-451D-AA72-F8134417031D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F535A11-BC24-4C96-B0B2-A283AEFAA35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F535A11-BC24-4C96-B0B2-A283AEFAA35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F535A11-BC24-4C96-B0B2-A283AEFAA35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F535A11-BC24-4C96-B0B2-A283AEFAA35F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,9 +50,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{23FA3C75-3C1B-453E-9553-21ED61A0EBA5} = {58EF8739-533E-4371-B231-A7BBFED2693F}
 		{7B520B1D-C517-44A0-B9FF-281D3F731ADE} = {58EF8739-533E-4371-B231-A7BBFED2693F}
-		{0D076B53-18EC-4F3D-B8DF-B8C117475CA1} = {58EF8739-533E-4371-B231-A7BBFED2693F}
 		{82F1F2DC-6C7E-4F2E-A361-1167932B91A4} = {58EF8739-533E-4371-B231-A7BBFED2693F}
 		{75950246-0F68-451D-AA72-F8134417031D} = {58EF8739-533E-4371-B231-A7BBFED2693F}
+		{2F535A11-BC24-4C96-B0B2-A283AEFAA35F} = {58EF8739-533E-4371-B231-A7BBFED2693F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E58D13C-ED1F-4024-9844-7BE4548D8D5F}

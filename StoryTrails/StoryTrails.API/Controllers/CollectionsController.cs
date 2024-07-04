@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoryTrails.Application.UseCases.Collections.interfaces;
-using StoryTrails.Comunication.Request;
-using StoryTrails.Comunication.Responses.Collections;
+using StoryTrails.Communication.Request;
+using StoryTrails.Communication.Responses.Collections;
 using StoryTrails.JWTAdmin.Services;
 
 namespace StoryTrails.API.Controllers
@@ -16,8 +16,13 @@ namespace StoryTrails.API.Controllers
         public async Task<IActionResult> CreateNewCollection([FromBody] CollectionJsonRequest requestBody, [FromServices] ICreateCollectionUseCase useCase, [FromHeader] string userToken)
         {
 
-            await useCase.Execute(requestBody, userToken);
-            return Created(string.Empty, "Success");
+            var tokenAdmin = new AdminToken();
+            if (tokenAdmin.ValidateToken(userToken))
+            {
+                await useCase.Execute(requestBody, userToken);
+                return Created(string.Empty, "Success");
+            }
+            return Unauthorized();
 
         }
 

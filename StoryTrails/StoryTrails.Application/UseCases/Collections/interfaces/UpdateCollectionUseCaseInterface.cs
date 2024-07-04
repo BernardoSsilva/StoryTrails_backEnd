@@ -1,4 +1,4 @@
-﻿using StoryTrails.Comunication.Request;
+﻿using StoryTrails.Communication.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;

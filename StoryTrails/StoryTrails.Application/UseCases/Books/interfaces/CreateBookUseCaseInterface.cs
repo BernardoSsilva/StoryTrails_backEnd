@@ -1,15 +1,10 @@
-﻿using StoryTrails.Comunication.Request;
-using StoryTrails.Comunication.Responses.Books;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StoryTrails.Communication.Request;
+using StoryTrails.Communication.Responses.Books;
 
 namespace StoryTrails.Application.UseCases.Books.interfaces
 {
     public interface ICreateBookUseCase
     {
-        Task<BookShortResponse> Execute(BooksJsonRequest request);
+        Task<BookShortResponse> Execute(BooksJsonRequest request, string userToken);
     }
 }

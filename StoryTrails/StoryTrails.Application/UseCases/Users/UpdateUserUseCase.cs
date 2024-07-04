@@ -4,8 +4,8 @@ using System.Text;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Users.interfaces;
-using StoryTrails.Comunication.Exceptions;
-using StoryTrails.Comunication.Request;
+using StoryTrails.Communication.Exceptions;
+using StoryTrails.Communication.Request;
 using StoryTrails.Domain.Infra;
 using StoryTrails.JWTAdmin.Services;
 
@@ -30,14 +30,16 @@ namespace StoryTrails.Application.UseCases.Users
 
             var entityToEdit = await _repository.Users.FirstOrDefaultAsync(user => user.Id == id);
 
-            if (entityToEdit.Id != decodedToken.UserId)
-            {
-                throw new UnauthorizedAccessError("Unauthorized");
-            }
             if (entityToEdit is null)
             {
                 throw new NotFoundError($"User with id {id} has not founded");
             }
+
+            if (entityToEdit.Id != decodedToken.UserId)
+            {
+                throw new UnauthorizedAccessError("Unauthorized");
+            }
+
             var entity = _mapper.Map(requestBody, entityToEdit);
             entity.UserPassword = string.Join("", MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(entity.UserPassword)).Select(s => s.ToString("x2")));
             _repository.Update(entity);

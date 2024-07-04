@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using StoryTrails.Comunication.Request;
+using StoryTrails.Communication.Request;
 
 namespace StoryTrails.Application.Validators
 {
-    public  class BookValidator:AbstractValidator<BooksJsonRequest>
+    public class BookValidator : AbstractValidator<BooksJsonRequest>
     {
 
         public BookValidator()

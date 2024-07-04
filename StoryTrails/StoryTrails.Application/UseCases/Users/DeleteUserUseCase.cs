@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Users.interfaces;
-using StoryTrails.Comunication.Exceptions;
+using StoryTrails.Communication.Exceptions;
 using StoryTrails.Domain.Infra;
 using StoryTrails.JWTAdmin.Services;
 
@@ -28,15 +28,15 @@ namespace StoryTrails.Application.UseCases.Users
             var tokenAdmin = new AdminToken();
             var decodedToken = tokenAdmin.DecodeToken(token);
 
-
-            if (userToExclude.Id != decodedToken.UserId)
-            {
-                throw new UnauthorizedAccessError("Unauthorized");
-            }
             if (userToExclude == null)
             {
                 throw new NotFoundError($"User with id {id} not found");
             }
+            if (userToExclude.Id != decodedToken.UserId)
+            {
+                throw new UnauthorizedAccessError("Unauthorized");
+            }
+
             _repository.Remove(userToExclude);
             await _repository.SaveChangesAsync();
         }
