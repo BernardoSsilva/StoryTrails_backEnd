@@ -2,6 +2,7 @@
 using StoryTrails.Comunication.Request;
 using StoryTrails.Comunication.Responses.Books;
 using StoryTrails.Comunication.Responses.Collections;
+using StoryTrails.Comunication.Responses.Users;
 using StoryTrails.Domain.Entities;
 
 
@@ -19,6 +20,8 @@ namespace StoryTrails.API.mappers
         {
              CreateMap<BooksJsonRequest, Book>();
              CreateMap<CollectionJsonRequest, Collection>();
+            CreateMap<UserJsonRequest, User>();
+
 
         }
 
@@ -29,6 +32,9 @@ namespace StoryTrails.API.mappers
             CreateMap<BooksJsonRequest, BookShortResponse>();
             CreateMap<CollectionJsonRequest, CollectionSingleResponse>();
             CreateMap<Collection, CollectionSingleResponse>();
+            CreateMap<User, UserResponse>();
+
+
 
         }
     }

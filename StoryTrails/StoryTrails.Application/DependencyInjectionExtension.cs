@@ -5,6 +5,8 @@ using StoryTrails.Application.UseCases.Books;
 using StoryTrails.Application.UseCases.Books.interfaces;
 using StoryTrails.Application.UseCases.Collections;
 using StoryTrails.Application.UseCases.Collections.interfaces;
+using StoryTrails.Application.UseCases.Users.interfaces;
+using StoryTrails.Application.UseCases.Users;
 
 namespace StoryTrails.Application
 {
@@ -36,6 +38,7 @@ namespace StoryTrails.Application
             service.AddScoped <IFindCollectionByIdUseCase, FindCollectionByIdUseCase > ();
             service.AddScoped <IUpdateCollectionUseCase, UpdateCollectionUseCase> ();
             service.AddScoped <IDeleteCollectionUseCase, DeleteCollectionUseCase> ();
+            service.AddScoped <IRegisterUserUseCase, RegisterUserUseCase > ();
         
         }
     }

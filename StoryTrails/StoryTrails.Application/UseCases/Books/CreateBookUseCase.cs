@@ -5,11 +5,6 @@ using StoryTrails.Comunication.Request;
 using StoryTrails.Comunication.Responses.Books;
 using StoryTrails.Domain.Entities;
 using StoryTrails.Domain.Infra;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StoryTrails.Application.UseCases.Books
 {
