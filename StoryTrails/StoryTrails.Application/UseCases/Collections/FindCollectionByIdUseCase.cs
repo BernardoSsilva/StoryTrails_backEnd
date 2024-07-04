@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Collections.interfaces;
+using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Responses.Collections;
 using StoryTrails.Domain.Infra;
 
@@ -19,6 +20,7 @@ namespace StoryTrails.Application.UseCases.Collections
         public async Task<CollectionSingleResponse> Execute(string id)
         {
             var result = await _repository.Collections.FirstOrDefaultAsync(collection => collection.Id == id);
+
             return _mapper.Map<CollectionSingleResponse>(result);
         }
     }

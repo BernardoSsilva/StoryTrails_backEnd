@@ -8,6 +8,8 @@ using StoryTrails.Domain.Entities;
 
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using StoryTrails.Comunication.Exceptions;
 
 namespace StoryTrails.Application.UseCases.Users
 {
@@ -29,6 +31,13 @@ namespace StoryTrails.Application.UseCases.Users
 
             HashAlgorithm algorithm = SHA256.Create();
 
+            var userAlreadyExists = await _repository.Users.FirstOrDefaultAsync(user => user.UserLogin == request.UserLogin);
+
+            if (userAlreadyExists != null)
+            {
+                throw new ConflictError("User already exists");
+            }
+
             entity.UserPassword = string.Join("", MD5.Create().ComputeHash(Encoding.ASCII.GetBytes(entity.UserPassword)).Select(s => s.ToString("x2")));
             await _repository.Users.AddAsync(entity);
             await _repository.SaveChangesAsync();
@@ -42,7 +51,7 @@ namespace StoryTrails.Application.UseCases.Users
             if (!result.IsValid)
             {
                 var errorMessages = result.Errors.ToList();
-                throw new ArgumentException(errorMessages[0].ToString());
+                throw new BadRequestError(errorMessages[0].ToString());
             }
         }
     }

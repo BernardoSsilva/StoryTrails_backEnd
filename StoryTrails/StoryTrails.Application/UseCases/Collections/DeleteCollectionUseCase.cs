@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Collections.interfaces;
+using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Domain.Infra;
 
 namespace StoryTrails.Application.UseCases.Collections
@@ -22,7 +23,7 @@ namespace StoryTrails.Application.UseCases.Collections
                 var collectionToDelete = await _repository.Collections.FirstOrDefaultAsync(collection => collection.Id == id);
 
                 if (collectionToDelete is null) {
-                    return false;
+                    throw new NotFoundError("Collection not found");
                 }
 
                 _repository.Collections.Remove(collectionToDelete);
@@ -32,7 +33,7 @@ namespace StoryTrails.Application.UseCases.Collections
             }
             catch (Exception ex) 
             {
-                throw new Exception("bad request");
+                throw new BadRequestError("bad request");
             }
 
         }

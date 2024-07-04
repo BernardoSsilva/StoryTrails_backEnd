@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StoryTrails.Application.UseCases.Books.interfaces;
 using StoryTrails.Application.Validators;
+using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Comunication.Responses.Books;
 using StoryTrails.Domain.Entities;
@@ -36,7 +37,7 @@ namespace StoryTrails.Application.UseCases.Books
             }
             catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new BadRequestError(ex.Message);
             }
           
         }
@@ -48,7 +49,7 @@ namespace StoryTrails.Application.UseCases.Books
             if(!result.IsValid)
             {
                 var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ArgumentException(errorMessages[0]);
+                throw new BadRequestError(errorMessages[0]);
             }
         }
     }

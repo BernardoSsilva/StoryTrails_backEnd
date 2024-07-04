@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Books.interfaces;
 using StoryTrails.Application.Validators;
+using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Domain.Infra;
 using System.Diagnostics;
@@ -28,7 +29,7 @@ namespace StoryTrails.Application.UseCases.Books
 
             if (bookToEdit == null) 
             {
-                throw new Exception("not found");
+                throw new NotFoundError("not found");
             }
 
             _mapper.Map(requestBody, bookToEdit);
@@ -43,7 +44,7 @@ namespace StoryTrails.Application.UseCases.Books
             if (!result.IsValid)
             {
                 var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ArgumentException(errorMessages[0]);
+                throw new BadRequestError(errorMessages[0]);
             }
         }
     }

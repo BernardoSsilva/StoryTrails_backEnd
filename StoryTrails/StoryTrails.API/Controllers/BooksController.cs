@@ -16,16 +16,11 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateNewBook([FromBody] BooksJsonRequest requestBody, [FromServices] ICreateBookUseCase useCase)
         {
-            try
-            {
+          
 
             var response = await useCase.Execute(requestBody);
             return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+         
         }
 
 
@@ -52,7 +47,7 @@ namespace StoryTrails.API.Controllers
 
             if(response is null)
             {
-                return NotFound("not found");
+                return NotFound("Book not found");
             }
             return Ok(response);
         }
@@ -78,15 +73,10 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateBookInfo(string id, [FromBody] BooksJsonRequest requestBody, [FromServices] IUpdateBookInfoUseCase useCase)
         {
-            try
-            {
+           
 
             await useCase.Execute(id, requestBody);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+           
 
             return Ok();
 
@@ -100,15 +90,10 @@ namespace StoryTrails.API.Controllers
 
         public async Task<IActionResult> DeleteBookById(string id, [FromServices] IDeleteBookUseCase useCase)
         {
-            try
-            {
+          
                 await useCase.Execute(id);
                 return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+       
         }
     }
 }

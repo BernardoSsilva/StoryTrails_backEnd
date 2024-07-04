@@ -13,14 +13,10 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateNewCollection([FromBody] CollectionJsonRequest requestBody, [FromServices] ICreateCollectionUseCase useCase) {
-            try
-            {
+           
                 await useCase.Execute(requestBody);
                 return Created(string.Empty, "Success");
-            } catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+           
         }
 
         [HttpGet]
@@ -59,19 +55,12 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateCollection(string id, [FromBody] CollectionJsonRequest requetBody, [FromServices] IUpdateCollectionUseCase useCase)
         {
-            try
-            {
+          
                 var result = await useCase.Execute(id, requetBody);
 
-                if (result == false)
-                {
-                    return NotFound();
-                }
+            
                 return NoContent();
-            } catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            
         }
 
         [HttpDelete]
@@ -81,21 +70,12 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteCollection(string id, [FromServices] IDeleteCollectionUseCase useCase)
         {
-            try
-            {
+          
                 var result = await useCase.Execute(id);
 
-                if (result == false)
-                {
-                    return NotFound();
-                }
+           
                 return NoContent();
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StoryTrails.Application.UseCases.Collections.interfaces;
 using StoryTrails.Application.Validators;
+using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Domain.Entities;
 using StoryTrails.Domain.Infra;
@@ -19,18 +20,13 @@ namespace StoryTrails.Application.UseCases.Collections
         }
         public async Task Execute(CollectionJsonRequest request)
         {
-            try
-            {
+          
                 Validate(request);
                 var entity = _mapper.Map<Collection>(request);
                 await _repository.Collections.AddAsync(entity); 
                 await _repository.SaveChangesAsync();
 
-            }
-            catch (Exception ex) 
-            {
-                throw new ArgumentException(ex.Message);
-            }
+           
         }
 
         public void Validate(CollectionJsonRequest request)
@@ -40,7 +36,7 @@ namespace StoryTrails.Application.UseCases.Collections
             if (!result.IsValid)
             {
                 var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ArgumentException(errorMessages[0]);
+                throw new BadRequestError(errorMessages[0]);
             }
         }
     }

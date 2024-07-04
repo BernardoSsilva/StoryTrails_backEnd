@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Books.interfaces;
+using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Domain.Infra;
 
 namespace StoryTrails.Application.UseCases.Books
@@ -20,7 +21,7 @@ namespace StoryTrails.Application.UseCases.Books
           var bookToDelete = await _repository.Books.FirstOrDefaultAsync(book => book.Id == id);
             if (bookToDelete is null)
             {
-                throw new Exception("not found");           
+                throw new NotFoundError("Book not found");           
             }
             _repository.Books.Remove(bookToDelete);
             _repository.SaveChanges();

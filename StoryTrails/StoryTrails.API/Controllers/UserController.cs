@@ -15,14 +15,8 @@ namespace StoryTrails.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterNewUser([FromBody] UserJsonRequest requestBody, [FromServices] IRegisterUserUseCase useCase)
         {
-            try
-            {
                 var result = await useCase.Execute(requestBody);
-                return Created(string.Empty,result);
-            }
-            catch (Exception ex) {
-                return BadRequest(ex.Message);
-                    }
+                return Created(string.Empty,result);  
         }
 
         [HttpGet]

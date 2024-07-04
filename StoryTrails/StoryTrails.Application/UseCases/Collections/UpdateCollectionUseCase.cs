@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StoryTrails.Application.UseCases.Collections.interfaces;
 using StoryTrails.Application.Validators;
+using StoryTrails.Comunication.Exceptions;
 using StoryTrails.Comunication.Request;
 using StoryTrails.Domain.Infra;
 using System;
@@ -29,7 +30,7 @@ namespace StoryTrails.Application.UseCases.Collections
                 Validate(requestBody);
                 var entityToUpdate = await _repository.Collections.FirstOrDefaultAsync(collection => collection.Id == id);
                 if (entityToUpdate is null) {
-                    return false;   
+                    throw new NotFoundError("Collection Not found");   
                 }
 
                 var newData =  _mapper.Map(requestBody, entityToUpdate);
@@ -39,7 +40,7 @@ namespace StoryTrails.Application.UseCases.Collections
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new BadRequestError(ex.Message);
             }
         }
 
@@ -51,7 +52,7 @@ namespace StoryTrails.Application.UseCases.Collections
             {
                 var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
 
-                throw new ArgumentException(errorMessages[0]);
+                throw new BadRequestError(errorMessages[0]);
             }
         }
     }
