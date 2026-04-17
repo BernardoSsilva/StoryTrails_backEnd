@@ -1,127 +1,175 @@
-# Instalação e Execução do Projeto
+# 📚 StoryTrails API (Python Version)
 
-## Instalação
+## 📌 Sobre o Projeto
 
-Para ter o código disponível em sua máquina, utilize o seguinte comando:
+A **StoryTrails API** é uma aplicação backend desenvolvida com **Django** como parte de um trabalho acadêmico de Engenharia de Software.
 
-```bash
-$ git clone https://github.com/BernardoSsilva/StoryTrails_backEnd.git
+O sistema consiste em uma **API REST para gerenciamento de uma coleção de livros**, permitindo operações completas de cadastro, autenticação e administração de dados.
+
+---
+
+## 🎯 Objetivo
+
+O projeto foi desenvolvido com o objetivo de:
+
+* Praticar construção de APIs REST com Django
+* Implementar autenticação segura com JWT
+* Trabalhar com gerenciamento de dados estruturados
+* Consolidar conceitos de backend em um contexto acadêmico
+
+---
+
+## 🔐 Autenticação
+
+A API utiliza **JWT (JSON Web Token)** para autenticação, permitindo:
+
+* Login seguro de usuários
+* Proteção de rotas privadas
+* Controle de acesso aos recursos da aplicação
+
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+* Python
+* Django
+* Django REST Framework
+* JWT Authentication
+* SQLite (ou outro banco configurado)
+
+---
+
+## 🚀 Funcionalidades
+
+* 📚 Cadastro de livros
+* ✏️ Atualização de informações
+* ❌ Remoção de livros
+* 📄 Listagem de livros
+* 🔐 Autenticação de usuários via JWT
+* 🛠️ Painel administrativo do Django
+
+---
+
+## 🧩 Estrutura do Projeto
+
+O projeto segue a estrutura padrão do Django, com organização voltada para APIs REST:
+
+* **apps/** → Módulos da aplicação
+* **models/** → Estrutura dos dados
+* **views/** → Lógica dos endpoints
+* **serializers/** → Transformação de dados
+* **urls/** → Rotas da API
+
+---
+
+## 🛠️ Instalação e Execução
+
+### 🔹 1. Clonar o repositório
+
+```bash id="cmd_clone"
+git clone https://github.com/BernardoSsilva/StoryTrails_backEnd.git
+cd StoryTrails_backEnd
 ```
 
-### Criando um Ambiente Virtual
+---
 
-Após clonar o repositório, crie um ambiente virtual Python dentro do projeto:
+### 🔹 2. Criar ambiente virtual
 
 #### Windows
 
-```bash
-$ py -m venv venv
+```bash id="cmd_win_venv"
+py -m venv venv
 ```
 
 #### Linux
 
-```bash
-$ python3 -m venv venv
+```bash id="cmd_linux_venv"
+python3 -m venv venv
 ```
 
-### Ativando o Ambiente Virtual
+---
+
+### 🔹 3. Ativar ambiente virtual
 
 #### Windows
 
-```bash
-$ venv\Scripts\activate.bat
+```bash id="cmd_win_activate"
+venv\Scripts\activate.bat
 ```
 
 #### Linux
 
-```bash
-$ source venv/bin/activate
+```bash id="cmd_linux_activate"
+source venv/bin/activate
 ```
 
-### Instalando Dependências
+---
 
-Com o ambiente virtual ativado, instale as dependências do projeto:
+### 🔹 4. Instalar dependências
 
-```bash
-(venv) $ pip install -r requirements.txt
+```bash id="cmd_install"
+pip install -r requirements.txt
 ```
 
-## Execução do Projeto
+---
 
-Para executar o projeto, utilize o comando adequado ao seu sistema operacional:
-
-### Windows
-
-```bash
-(venv) $ py manage.py runserver
-```
-
-### Linux
-
-```bash
-(venv) $ python3 manage.py runserver
-```
-
-Após isso, a API estará em funcionamento na porta `8000`. Você pode acessá-la no endereço `http://localhost:8000`.
-
-### Acesso ao Perfil de Administrador
-
-Para criar uma conta de superusuário e acessar o painel de administração, utilize o comando:
-
-```bash
-(venv) $ py manage.py createsuperuser
-```
-
-Depois de criar sua conta, acesse o painel de administração no link `http://localhost:8000/admin`.
-
-## Resumo de Comandos
-
-### Clonar o Repositório
-
-```bash
-$ git clone https://github.com/BernardoSsilva/StoryTrails_backEnd.git
-```
-
-### Criar e Ativar o Ambiente Virtual
+### 🔹 5. Executar o projeto
 
 #### Windows
 
-```bash
-$ py -m venv venv
-$ venv\Scripts\activate.bat
+```bash id="cmd_run_win"
+py manage.py runserver
 ```
 
 #### Linux
 
-```bash
-$ python3 -m venv venv
-$ source venv/bin/activate
+```bash id="cmd_run_linux"
+python3 manage.py runserver
 ```
 
-### Instalar Dependências
+📌 A API estará disponível em:
+http://localhost:8000
 
-```bash
-(venv) $ pip install -r requirements.txt
+---
+
+### 🔹 6. Criar superusuário
+
+```bash id="cmd_superuser"
+py manage.py createsuperuser
 ```
 
-### Executar o Servidor
+📌 Acesse o painel administrativo:
+http://localhost:8000/admin
 
-#### Windows
+---
 
-```bash
-(venv) $ py manage.py runserver
-```
+## 🧪 Contexto de Desenvolvimento
 
-#### Linux
+Este projeto foi desenvolvido como parte de um trabalho acadêmico, com foco em:
 
-```bash
-(venv) $ python3 manage.py runserver
-```
+* Aprendizado de backend com Django
+* Implementação de autenticação
+* Estruturação de APIs REST
+* Manipulação de dados em banco relacional
 
-### Criar Superusuário
+---
 
-```bash
-(venv) $ py manage.py createsuperuser
-```
+## 📈 Possíveis Melhorias
 
-Com esses passos, você estará pronto para desenvolver e testar o projeto StoryTrails BackEnd.
+* Implementação de testes automatizados
+* Paginação e filtros avançados
+* Documentação da API (Swagger)
+* Melhor organização em camadas
+* Deploy em ambiente cloud
+
+---
+
+## 💬 Considerações Finais
+
+Este projeto representa uma base sólida em:
+
+* Desenvolvimento de APIs com Django
+* Autenticação via JWT
+* Estruturação de aplicações backend
+* Aplicação prática de conceitos acadêmicos
+
